@@ -123,6 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
+    <h1>test</h1>
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div>
             <h1 class="bg-warning text-light rounded">ALIMBRARY v2.0</h1>
