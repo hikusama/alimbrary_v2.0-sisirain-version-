@@ -116,7 +116,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         .wrapper { 
             width: 500px;
             padding: 20px;
-            background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background for better readability */
+            background-color: rgba(255, 255, 255, 1.0); /* Add a semi-transparent white background for better readability */
             margin: auto;
             margin-top: 100px; /* Adjust as needed */
             border-radius: 10px;
@@ -136,21 +136,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body>
     <div class="wrapper mx-auto mt-5">
-        <h2><b>Sign Up</b></h2>
+        <h2>Sign Up</h2>
         <p>Please fill this form to create an account.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
-                <label><b>Username</b></label>
+                <label>Username</label>
                 <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
                 <span class="invalid-feedback"><?php echo $username_err; ?></span>
             </div>    
             <div class="form-group">
-                <label><b>Password</b></label>
+                <label>Password</label>
                 <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
                 <span class="invalid-feedback"><?php echo $password_err; ?></span>
             </div>
             <div class="form-group">
-                <label><b>Confirm Password</b></label>
+                <label>Confirm Password</label>
                 <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
                 <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
             </div>
