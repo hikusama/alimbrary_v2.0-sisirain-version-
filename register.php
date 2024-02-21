@@ -1,42 +1,42 @@
 <?php
 // Include config file
 require_once "config.php";
- 
+
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
 $user_type = "user";
- 
+
 // Processing form data when form is submitted
-if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
     // Validate username
-    if(empty(trim($_POST["username"]))){
+    if (empty(trim($_POST["username"]))) {
         $username_err = "Please enter a username.";
-    } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"]))){
+    } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"]))) {
         $username_err = "Username can only contain letters, numbers, and underscores.";
-    } else{
+    } else {
         // Prepare a select statement
         $sql = "SELECT id FROM users WHERE username = ?";
-        
-        if($stmt = mysqli_prepare($link, $sql)){
+
+        if ($stmt = mysqli_prepare($conn, $sql)) {
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "s", $param_username);
-            
+
             // Set parameters
             $param_username = trim($_POST["username"]);
-            
+
             // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
+            if (mysqli_stmt_execute($stmt)) {
                 /* store result */
                 mysqli_stmt_store_result($stmt);
-                
-                if(mysqli_stmt_num_rows($stmt) == 1){
+
+                if (mysqli_stmt_num_rows($stmt) == 1) {
                     $username_err = "This username is already taken.";
-                } else{
+                } else {
                     $username = trim($_POST["username"]);
                 }
-            } else{
+            } else {
                 echo "Oops! Something went wrong. Please try again later.";
             }
 
@@ -44,46 +44,46 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             mysqli_stmt_close($stmt);
         }
     }
-    
+
     // Validate password
-    if(empty(trim($_POST["password"]))){
-        $password_err = "Please enter a password.";     
-    } elseif(strlen(trim($_POST["password"])) < 6){
-        $password_err = "Password must have atleast 6 characters.";
-    } else{
+    if (empty(trim($_POST["password"]))) {
+        $password_err = "Please enter a password.";
+    } elseif (strlen(trim($_POST["password"])) < 6) {
+        $password_err = "Password must have at least 6 characters.";
+    } else {
         $password = trim($_POST["password"]);
     }
-    
+
     // Validate confirm password
-    if(empty(trim($_POST["confirm_password"]))){
-        $confirm_password_err = "Please confirm password.";     
-    } else{
+    if (empty(trim($_POST["confirm_password"]))) {
+        $confirm_password_err = "Please confirm password.";
+    } else {
         $confirm_password = trim($_POST["confirm_password"]);
-        if(empty($password_err) && ($password != $confirm_password)){
+        if (empty($password_err) && ($password != $confirm_password)) {
             $confirm_password_err = "Password did not match.";
         }
     }
-    
+
     // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
-        
+    if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
+
         // Prepare an insert statement
         $sql = "INSERT INTO users (username, password, user_type) VALUES (?, ?, ?)";
-         
-        if($stmt = mysqli_prepare($link, $sql)){
+
+        if ($stmt = mysqli_prepare($conn, $sql)) {
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "sss", $param_username, $param_password, $param_user_type);
-            
+
             // Set parameters
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
             $param_user_type = $user_type;
-            
+
             // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
+            if (mysqli_stmt_execute($stmt)) {
                 // Redirect to login page
                 header("location: login.php");
-            } else{
+            } else {
                 echo "Oops! Something went wrong. Please try again later.";
             }
 
@@ -91,76 +91,73 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             mysqli_stmt_close($stmt);
         }
     }
-    
+
     // Close connection
-    mysqli_close($link);
+    mysqli_close($conn);
 }
 ?>
- 
+
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body { 
-            font: 14px sans-serif; 
-            background-image: url('images/bg-img.jpg'); /* Corrected path to background image */
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-        }
-        .wrapper { 
-            width: 500px;
-            padding: 20px;
-            background-color: rgba(255, 255, 255, 1.0); /* Add a semi-transparent white background for better readability */
-            margin: auto;
-            margin-top: 100px; /* Adjust as needed */
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow for better visual appearance */
-        }
-        .wrapper h2 {
-            margin-bottom: 20px; /* Add spacing below the heading */
-            text-align: center; /* Center align the heading */
-        }
-        .form-group {
-            margin-bottom: 20px; /* Add spacing between form elements */
-        }
-        p {
-            text-align: center; /* Center align the paragraph */
-        }
-    </style>
-</head>
-<body>
-    <div class="wrapper mx-auto mt-5">
-        <h2>Sign Up</h2>
-        <p>Please fill this form to create an account.</p>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
-                <span class="invalid-feedback"><?php echo $username_err; ?></span>
-            </div>    
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
-                <span class="invalid-feedback"><?php echo $password_err; ?></span>
+<html lang="en" dir="ltr">
+   <head>
+        <meta charset="utf-8">
+        <title>Transparent Login Form HTML CSS</title>
+        <link rel="stylesheet" href="login.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+   </head>
+   <body>
+      <div class="bg-img">
+         <div class="content">
+            <header>Signup Form</header>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+               <div class="field">
+                  <span class="fa fa-user"></span>
+                  <input type="text" name="username" required placeholder="Username">
+               </div>
+               <div class="field space">
+                  <span class="fa fa-lock"></span>
+                  <input type="password" class="pass-key" name="password" required placeholder="Password">
+                  <span class="show">SHOW</span>
+               </div>
+               <div class="field space">
+                  <span class="fa fa-lock"></span>
+                  <input type="password" class="pass-key" name="confirm_password" required placeholder="Confirm Password">
+                  <span class="show">SHOW</span>
+               </div>
+               <div class="pass">
+                  <a href="#"> </a>
+               </div>
+               <div class="field">
+                  <input type="submit" class="btn btn-primary" value="Submit">
+                  <input type="reset" class="btn btn-secondary ml-2" value="Reset">
+               </div>
+            </form>
+            <?php if (!empty($login_err)) : ?>
+               <div class="error"><?php echo $login_err; ?></div>
+            <?php endif; ?>
+            <div class="signup">
+               Have an account?
+               <a href="login.php">Back to Login</a>
             </div>
-            <div class="form-group">
-                <label>Confirm Password</label>
-                <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
-                <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Submit">
-                <input type="reset" class="btn btn-secondary ml-2" value="Reset">
-            </div>
-            <p>Already have an account? <a href="login.php">Login here</a>.</p>
-        </form>
-    </div>    
-    
-</body>
+         </div>
+      </div>
+      <script>
+        const pass_fields = document.querySelectorAll('.pass-key');
+        const showBtns = document.querySelectorAll('.show');
+
+        showBtns.forEach((btn, index) => {
+            btn.addEventListener('click', function(){
+                if(pass_fields[index].type === "password"){
+                    pass_fields[index].type = "text";
+                    btn.textContent = "HIDE";
+                    btn.style.color = "#3498db";
+                } else {
+                    pass_fields[index].type = "password";
+                    btn.textContent = "SHOW";
+                    btn.style.color = "#222";
+                }
+            });
+        });
+    </script>
+   </body>
 </html>
