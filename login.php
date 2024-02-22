@@ -123,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                </div>
             </form>
             <?php if (!empty($login_err)) : ?>
-               <div class="error"><?php echo $login_err; ?></div>
+               <div class="error text-light"><?php echo $login_err; ?></div>
             <?php endif; ?>
             <div class="signup">
                Don't have an account?
