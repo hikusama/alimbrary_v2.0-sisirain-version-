@@ -183,59 +183,49 @@
                                 </div>
                             </div>
                         </div>
-                        <?php
-                        // Include config file
-                        require_once "config.php";
+                        <div class="container">
+        <div class="row">
+        <div class="container">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <?php
+        // Include config file
+        require_once "config.php";
 
-                        // Attempt select query execution
-                        $sql = "SELECT * FROM books";
-                        if ($result = mysqli_query($conn, $sql)) {
-                            if (mysqli_num_rows($result) > 0) {
-                                echo '<table class="table table-bordered table-striped">';
-                                echo "<thead>";
-                                echo "<tr>";
-                                echo "<th>Book id #</th>";
-                                echo "<th>Title</th>";
-                                echo "<th>Author</th>";
-                                echo "<th>ISBN</th>";
-                                echo "<th>Publication Year</th>";
-                                echo "<th>Genre</th>";
-                                echo "</tr>";
-                                echo "</thead>";
-                                echo "<tbody>";
-                                while ($row = mysqli_fetch_array($result)) {
-                                    echo "<tr>";
-                                    echo "<td>" . $row['book_id'] . "</td>";
-                                    echo "<td>" . $row['title'] . "</td>";
-                                    echo "<td>" . $row['author'] . "</td>";
-                                    echo "<td>" . $row['isbn'] . "</td>";
-                                    echo "<td>" . $row['pub_year'] . "</td>";
-                                    echo "<td>" . $row['genre'] . "</td>";
-                                    echo "<td>";
-                                    /* echo '<a href="read.php?id='. $row['id'] .'" class="mr-3" title="View Record" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
-                                            echo '<a href="update.php?id='. $row['id'] .'" class="mr-3" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>';
-                                            echo '<a href="delete.php?id='. $row['id'] .'" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash"></span></a>'; */
-                                    echo "</td>";
-                                    echo "</tr>";
-                                }
-                                echo "</tbody>";
-                                echo "</table>";
-                                // Free result set
-                                mysqli_free_result($result);
-                            } else {
-                                echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
-                            }
-                        } else {
-                            echo "Oops! Something went wrong. Please try again later.";
-                        }
+        // Attempt select query execution
+        $sql = "SELECT * FROM books";
+        if ($result = mysqli_query($conn, $sql)) {
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_array($result)) {
+                    echo '<div class="col mb-4">';
+                    echo '<div class="card h-100">';
+                    echo '<img src="images/7-hp-grandpre-refresh-deathlyhallows-sm.png" class="card-img-top" alt="..." style="height: 300px; width: 350px;">';
+                    echo '<div class="card-body d-flex flex-column">';
+                    echo '<h5 class="card-title">' . $row['title'] . '</h5>';
+                    echo '<hr>';
+                    echo '<p class="card-text flex-grow-1">Author: ' . $row['author'] . '</p>';
+                    echo '<p class="card-text">ISBN: ' . $row['isbn'] . '</p>';
+                    echo '<p class="card-text">Publication Year: ' . $row['pub_year'] . '</p>';
+                    echo '<p class="card-text">Genre: ' . $row['genre'] . '</p>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                }
+                // Free result set
+                mysqli_free_result($result);
+            } else {
+                echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
+            }
+        } else {
+            echo "Oops! Something went wrong. Please try again later.";
+        }
 
-                        // Close connection
-                        mysqli_close($conn);
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
+        // Close connection
+        mysqli_close($conn);
+        ?>
+    </div>
+</div>
+
+
         <a href="welcome.php"><button>Back</button></a>
     </body>
 

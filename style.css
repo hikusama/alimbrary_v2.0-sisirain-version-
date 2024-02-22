@@ -36,7 +36,7 @@
     transform: translate(-50%, -50%);
     background: rgba(255, 255, 255, 0.2);
     box-shadow: -1px 4px 28px 0px rgba(0, 0, 0, 0.75);
-    border-radius: 50px;
+    border-radius: 20px;
 }
 
 .content header {
@@ -56,7 +56,7 @@
 }
 
 .field span {
-    color: #222;
+    color: #3700fc;
     width: 40px;
     line-height: 45px;
 }
@@ -144,4 +144,10 @@ i span {
 
 .signup a:hover {
     text-decoration: underline;
+}
+.error{
+    color: rgb(241, 9, 9);
+    font-size: 20px;
+    background-color: white;
+    margin-top: 5px;
 }
