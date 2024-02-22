@@ -97,9 +97,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en" dir="ltr">
    <head>
         <meta charset="utf-8">
-        <title>Transparent Login Form HTML CSS</title>
-        <link rel="stylesheet" href="login.css"/>
+        <title>Transparent Login Form HTML CSS</title>      
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+        <link rel="stylesheet" href="login.css"/>
    </head>
    <body>
       <div class="bg-img">
@@ -123,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                </div>
             </form>
             <?php if (!empty($login_err)) : ?>
-               <div class="error text-light"><?php echo $login_err; ?></div>
+               <div class="error"><?php echo $login_err; ?></div>
             <?php endif; ?>
             <div class="signup">
                Don't have an account?
