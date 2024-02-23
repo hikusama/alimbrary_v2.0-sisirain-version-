@@ -21,7 +21,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <style>
             .modal-dialog {
-                max-width: 400px;
+                max-width: 600px;
                 /* Adjust the width as needed */
             }
 
@@ -37,11 +37,11 @@
     </head>
 
     <body>
-        <div class="wrapper">
+       
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="mt-5 mb-3 clearfix">
+                        <div class="mt-3 clearfix">
                             <h2 class="pull-left">Books</h2>
                             <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#exampleModal">Add new book &nbsp; <img src="images\plus-circle-svgrepo-com.svg" alt="" style="height: 20px; width:20px ;"></button>
                             <div class="modal fade" id="exampleModal">
@@ -138,11 +138,11 @@
                                             }
                                             ?>
 
-                                            <div class="wrapper">
+                                            
                                                 <div class="container-fluid">
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <h2 class="mt-5">Create Book</h2>
+                                                            <h2>Create Book</h2>
                                                             <p>Please fill this form and submit to add Books record to the database.</p>
                                                             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                                                                 <div class="form-group">
@@ -176,57 +176,67 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            
                                         </div>
-                                        <div class="modal-footer"></div>
+                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="container">
-        <div class="row">
+                        <div class="container-fluid">
+    <div class="row">
         <div class="container">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-        <?php
-        // Include config file
-        require_once "config.php";
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+                <?php
+                // Include config file
+                require_once "config.php";
 
-        // Attempt select query execution
-        $sql = "SELECT * FROM books";
-        if ($result = mysqli_query($conn, $sql)) {
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_array($result)) {
-                    echo '<div class="col mb-4">';
-                    echo '<div class="card h-100">';
-                    echo '<img src="images/7-hp-grandpre-refresh-deathlyhallows-sm.png" class="card-img-top" alt="..." style="height: 300px; width: 350px;">';
-                    echo '<div class="card-body d-flex flex-column">';
-                    echo '<h5 class="card-title">' . $row['title'] . '</h5>';
-                    echo '<hr>';
-                    echo '<p class="card-text flex-grow-1">Author: ' . $row['author'] . '</p>';
-                    echo '<p class="card-text">ISBN: ' . $row['isbn'] . '</p>';
-                    echo '<p class="card-text">Publication Year: ' . $row['pub_year'] . '</p>';
-                    echo '<p class="card-text">Genre: ' . $row['genre'] . '</p>';
-                    echo '</div>';
-                    echo '</div>';
-                    echo '</div>';
+                // Attempt select query execution
+                $sql = "SELECT * FROM books";
+                if ($result = mysqli_query($conn, $sql)) {
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_array($result)) {
+                            echo '<div class="col sm-2 mb-4">';
+                            echo '<div class="card h-100 border-dark">';
+                            echo '<div class="d-flex justify-content-center align-items-center">';
+                            // Display the image from the database
+                            echo '<img src="data:image/jpeg;base64,'.base64_encode($row['image']).'" alt="Book Image" style="height: 300px; width: 250px;">';
+                            echo '</div>';
+                            echo '<div class="card-body d-flex flex-column">';
+                            echo '<h5 class="card-title text-center">' . $row['title'] . '</h5>';
+                            echo '<p class="card-text flex-grow-1 text-center">Author: ' . $row['author'] . '</p>';
+                            echo '<p class="card-text text-center">ISBN: ' . $row['isbn'] . '</p>';
+                            echo '<p class="card-text text-center">Publication Year: ' . $row['pub_year'] . '</p>';
+                            echo '<p class="card-text text-center">Genre: ' . $row['genre'] . '</p>';
+                            echo '<div class="d-flex flex-row justify-content-center align-items-center">';
+                            echo '<a href="viewbook.php?book_id='. $row['book_id'] .'" class="mr-3" title="View Record" data-toggle="tooltip"><span class="fa fa-eye"></span></a>';
+                            echo '<a href="updatebook.php?book_id='. $row['book_id'] .'" class="mr-3" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil"></span></a>';
+                            echo '<a href="deletebook.php?book_id='. $row['book_id'] .'" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash"></span></a>';
+                            echo '</div>';
+                            echo '</div>';
+                            echo '</div>';
+                            echo '</div>';
+                        }
+                        // Free result set
+                        mysqli_free_result($result);
+                    } else {
+                        echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
+                    }
+                } else {
+                    echo "Oops! Something went wrong. Please try again later.";
                 }
-                // Free result set
-                mysqli_free_result($result);
-            } else {
-                echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
-            }
-        } else {
-            echo "Oops! Something went wrong. Please try again later.";
-        }
 
-        // Close connection
-        mysqli_close($conn);
-        ?>
+                // Close connection
+                mysqli_close($conn);
+                ?>
+            </div>
+        </div>
     </div>
 </div>
 
 
-        <a href="welcome.php"><button>Back</button></a>
+
+                                <a href="welcome.php"><button>Back</button></a>
     </body>
 
     </html>
