@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2024 at 09:03 AM
+-- Generation Time: Feb 24, 2024 at 09:38 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -47,7 +47,13 @@ INSERT INTO `books` (`book_id`, `title`, `author`, `isbn`, `pub_year`, `genre`, 
 (19, 'The Great Gatsby', 'F. Scott Fitzgerald', '978-0743273565', 1925, 'Fiction, Classic', 0x75706c6f6164732f5468655f47726561745f4761747362795f436f7665725f313932355f5265746f75636865642e6a7067),
 (20, '1984', 'George Orwell', '978-0451524935', 1949, 'Fiction, Dystopian', 0x75706c6f6164732f313938342e6a7067),
 (21, 'The Catcher in the Rye', 'J.D. Salinger', '978-0316769488', 1978, 'Fiction, Coming-of-Age', 0x75706c6f6164732f636174636865722d696e2d7468652d7279652d636f7665722d696d6167652d36383278313032342e6a706567),
-(22, 'The Lord of the Rings', 'J.R.R. Tolkien', '978-0544003415', 1954, 'Fantasy', 0x75706c6f6164732f7468652d6c6f72642d6f662d7468652d72696e67732d626f6f6b2d636f7665722e6a7067);
+(22, 'The Lord of the Rings', 'J.R.R. Tolkien', '978-0544003415', 1954, 'Fantasy', 0x75706c6f6164732f7468652d6c6f72642d6f662d7468652d72696e67732d626f6f6b2d636f7665722e6a7067),
+(23, 'Pride and Prejudice', 'Jane Austen', '978-0141439518', 1813, 'Fiction, Classic, Romance', 0x75706c6f6164732f70726964652d616e642d7072656a75646963652d37312e6a7067),
+(24, 'The Hobbit', 'J.R.R. Tolkien', '978-0547928227', 1937, 'Fantasy', 0x75706c6f6164732f74686520686f626269742e6a7067),
+(25, 'The Hunger Games', 'Suzanne Collins', '978-0439023481', 2008, 'Young Adult, Dystopian', 0x75706c6f6164732f7468652068756e6765722067616d65732e6a7067),
+(26, 'The Da Vinci Code', 'Dan Brown', '978-0307474278', 2003, 'Mystery, Thriller', 0x75706c6f6164732f7468652d64612d76696e63692d636f64652e6a7067),
+(27, 'Gone with the Wind', 'Margaret Mitchell', '978-1451635621', 1936, 'Historical Fiction, Romance', 0x75706c6f6164732f676f6e652d776974682d7468652d77696e642d393738313435313633353632315f6c672e6a7067),
+(28, 'The Alchemist', 'Paulo Coelho', '978-0062315007', 1988, 'Fiction, Inspirational', 0x75706c6f6164732f74686520616c6368656d6973742e6a7067);
 
 -- --------------------------------------------------------
 
@@ -122,7 +128,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `images`
