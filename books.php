@@ -103,10 +103,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-md-12">
                 <div class="mt-3 clearfix">
                     <h2 class="pull-left">Books</h2>
-                    <button class="btn btn-secondary pull-right"><a href="welcome.php" class="text-light">back</a></button>
+                    <button class="btn btn-secondary pull-right"><a href="welcome.php" class="text-light">Back to Dashboard</a></button>
                     <button type="button" class="btn btn-primary pull-right mr-3" data-toggle="modal"
-                        data-target="#exampleModal">Add new book &nbsp; <img src="images\plus-circle-svgrepo-com.svg"
-                            alt="" style="height: 20px; width:20px ;"></button>
+                        data-target="#exampleModal">Add New Book &nbsp; <img src="images\plus-circle-svgrepo-com.svg"
+                        alt="" style="height: 20px; width:20px ;">
+                    </button>
                     <div class="modal fade" id="exampleModal">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -172,67 +173,78 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="container-fluid">
-    <div class="row">
-        <div class="container">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-                <?php
-                // Include config file
-                require_once "config.php";
+        <div class="row">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+                    <?php
+                    // Include config file
+                    require_once "config.php";
 
-                // Attempt select query execution
-                $sql = "SELECT * FROM books";
-                if ($result = mysqli_query($conn, $sql)) {
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_array($result)) {
-                            echo '<div class="col sm-2 mb-4">';
-                            echo '<div class="card border-dark h-100">';
-                            echo '<div class="d-flex justify-content-center align-items-center mt-2 ">';
+                    // Attempt select query execution
+                    $sql = "SELECT * FROM books";
+                    if ($result = mysqli_query($conn, $sql)) {
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_array($result)) {
+                                echo '<div class="col sm-2 mb-4">';
+                                    echo '<div class="card border-dark h-100">';
+                                        echo '<div class="d-flex justify-content-center align-items-center mt-2 " 
+                                        style="
+                                            width: auto;
+                                            height: 220px;
+                                            
+                                        ">';
 
-                            // Display the image if image path exists
-                            if (!empty($row['image_path'])) {
-                                echo '<img src="' . $row['image_path'] . '" alt="Book Image" style="max-height: 200px; max-width: 150px;">';
-                            } else {
-                                echo '<span>No image available</span>';
+                                            // Display the image if image path exists
+                                            if (!empty($row['image_path'])) {
+                                                echo '<img src="' . $row['image_path'] .'
+                                                    "alt="Book Image" 
+                                                    style="
+                                                        max-height: 200px;
+                                                        max-width: 150px;
+                                                    ">';
+                                            } 
+                                            else {
+                                                echo '<span>No image available</span>';
+                                            }
+                                        echo '</div>';
+
+                                        echo '<div class="card-body d-flex flex-column" style="height: 300px;">'; 
+                                            echo '<h5 class="card-title text-center" style="height: 50px">' . $row['title'] . '</h5>';
+                                            echo '<p class="card-text text-center">Author: ' . $row['author'] . '</p>';
+                                            echo '<p class="card-text text-center">ISBN: ' . $row['isbn'] . '</p>';
+                                            echo '<p class="card-text text-center">Publication Year: ' . $row['pub_year'] . '</p>';
+                                            echo '<p class="card-text text-center">Genre: ' . $row['genre'] . '</p>';
+                                            echo '<div class="d-flex flex-row justify-content-center align-items-center bg-secondary rounded p-2 mx-auto" style="max-width: 120px;">';
+                                                echo '<a href="viewbook.php?book_id=' . $row['book_id'] . '" class="mr-3 text-light" title="View Record" data-toggle="tooltip"><span class="fa fa-eye fa-lg"></span></a>';
+                                                echo '<a href="updatebook.php?book_id=' . $row['book_id'] . '" class="mr-3 text-light" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil fa-lg"></span></a>';
+                                                echo '<a href="deletebook.php?book_id=' . $row['book_id'] . '" class="text-light" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash fa-lg"></span></a>';
+                                            echo '</div>';
+                                        echo '</div>';
+                                    echo '</div>';
+                                echo '</div>';
                             }
-                            echo '</div>';
-
-                            echo '<div class="card-body d-flex flex-column" style="height: 290px;">'; // Set fixed height for card body
-                            echo '<h5 class="card-title text-center">' . $row['title'] . '</h5>';
-                            echo '<p class="card-text text-center">Author: ' . $row['author'] . '</p>';
-                            echo '<p class="card-text text-center">ISBN: ' . $row['isbn'] . '</p>';
-                            echo '<p class="card-text text-center">Publication Year: ' . $row['pub_year'] . '</p>';
-                            echo '<p class="card-text text-center">Genre: ' . $row['genre'] . '</p>';
-                            echo '<div class="d-flex flex-row justify-content-center align-items-center bg-secondary rounded p-2 mx-auto" style="max-width: 120px;">';
-                            echo '<a href="viewbook.php?book_id=' . $row['book_id'] . '" class="mr-3 text-light" title="View Record" data-toggle="tooltip"><span class="fa fa-eye fa-lg"></span></a>';
-                            echo '<a href="updatebook.php?book_id=' . $row['book_id'] . '" class="mr-3 text-light" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil fa-lg"></span></a>';
-                            echo '<a href="deletebook.php?book_id=' . $row['book_id'] . '" class="text-light" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash fa-lg"></span></a>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '</div>';
+                            // Free result set
+                            mysqli_free_result($result);
+                        } else {
+                            echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
                         }
-                        // Free result set
-                        mysqli_free_result($result);
                     } else {
-                        echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
+                        echo "Oops! Something went wrong. Please try again later.";
                     }
-                } else {
-                    echo "Oops! Something went wrong. Please try again later.";
-                }
 
-                // Close connection
-                mysqli_close($conn);
-                ?>
+                    // Close connection
+                    mysqli_close($conn);
+                    ?>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-                   
     <!-- Include Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
