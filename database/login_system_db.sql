@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2024 at 09:18 PM
+-- Generation Time: Feb 25, 2024 at 09:31 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -55,11 +55,11 @@ INSERT INTO `books` (`book_id`, `title`, `author`, `isbn`, `pub_year`, `genre`, 
 (27, 'Gone with the Wind', 'Margaret Mitchell', '978-1451635621', 1936, 'Historical Fiction, Romance', 0x75706c6f6164732f676f6e652d776974682d7468652d77696e642d393738313435313633353632315f6c672e6a7067),
 (28, 'The Alchemist', 'Paulo Coelho', '978-0062315007', 1988, 'Fiction, Inspirational', 0x75706c6f6164732f74686520616c6368656d6973742e6a7067),
 (29, 'The Girl with the Dragon Tattoo', 'Stieg Larsson', '978-396509843', 2005, 'Mystery, Thriller', 0x75706c6f6164732f647261676f6e20746174746f6f2e6a7067),
-(30, 'The Fault in Our Stars', 'John Green', '978-330023295', 2012, 'Young Adult, Romance', 0x75706c6f6164732f5468655f4661756c745f696e5f4f75725f53746172732e6a7067),
 (31, 'The Secret', 'Rhonda Byrne', '978-495770694', 2006, 'Self-help, Inspirational', 0x75706c6f6164732f7468652d7365637265742d393738313538323730313730375f68722e6a7067),
-(32, 'The Road', 'Cormac McCarthy', '978-123454484', 2006, 'Fiction, Dystopian', 0x75706c6f6164732f7468652d726f61642d32362e6a7067),
 (33, 'A Game of Thrones', 'George R.R. Martin', '978-895152732', 1996, 'Fantasy', 0x75706c6f6164732f474f544d5449322e6a7067),
-(34, 'The Chronicles of Narnia', 'C.S. Lewis', '978-566884303', 1950, 'Fantasy, Children\'s', 0x75706c6f6164732f6e61726e69612e6a7067);
+(34, 'The Chronicles of Narnia', 'C.S. Lewis', '978-566884303', 1950, 'Fantasy, Children\'s', 0x75706c6f6164732f6e61726e69612e6a7067),
+(35, 'Noli Me Tangere', 'Jose Rizal', '978-533703972', 1887, '1887', 0x75706c6f6164732f6e6f6c69206d652074616e676572652e6a7067),
+(36, 'El Filibusterismo', 'Jose Rizal', '978-985906966', 1891, 'Fiction, Classic', 0x75706c6f6164732f656c2066696c692e6a7067);
 
 -- --------------------------------------------------------
 
@@ -134,7 +134,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `images`
