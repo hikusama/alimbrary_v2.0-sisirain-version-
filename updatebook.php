@@ -198,8 +198,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="file" name="image" class="form-control-file">
                         <span class="text-danger"><?php echo $image_err; ?></span>
                     </div>
-                    <input type="submit" class="btn btn-primary" value="Update">
-                    <a href="books.php" class="btn btn-secondary ml-2">Cancel</a>
+                    <input type="submit" class="btn btn-primary mb-2" value="Update">
+                    <a href="books.php" class="btn btn-secondary ml-2 mb-2">Cancel</a>
                 </form>
             </div>
         </div>

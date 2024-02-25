@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 24, 2024 at 09:38 AM
+-- Generation Time: Feb 25, 2024 at 09:18 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -53,7 +53,13 @@ INSERT INTO `books` (`book_id`, `title`, `author`, `isbn`, `pub_year`, `genre`, 
 (25, 'The Hunger Games', 'Suzanne Collins', '978-0439023481', 2008, 'Young Adult, Dystopian', 0x75706c6f6164732f7468652068756e6765722067616d65732e6a7067),
 (26, 'The Da Vinci Code', 'Dan Brown', '978-0307474278', 2003, 'Mystery, Thriller', 0x75706c6f6164732f7468652d64612d76696e63692d636f64652e6a7067),
 (27, 'Gone with the Wind', 'Margaret Mitchell', '978-1451635621', 1936, 'Historical Fiction, Romance', 0x75706c6f6164732f676f6e652d776974682d7468652d77696e642d393738313435313633353632315f6c672e6a7067),
-(28, 'The Alchemist', 'Paulo Coelho', '978-0062315007', 1988, 'Fiction, Inspirational', 0x75706c6f6164732f74686520616c6368656d6973742e6a7067);
+(28, 'The Alchemist', 'Paulo Coelho', '978-0062315007', 1988, 'Fiction, Inspirational', 0x75706c6f6164732f74686520616c6368656d6973742e6a7067),
+(29, 'The Girl with the Dragon Tattoo', 'Stieg Larsson', '978-396509843', 2005, 'Mystery, Thriller', 0x75706c6f6164732f647261676f6e20746174746f6f2e6a7067),
+(30, 'The Fault in Our Stars', 'John Green', '978-330023295', 2012, 'Young Adult, Romance', 0x75706c6f6164732f5468655f4661756c745f696e5f4f75725f53746172732e6a7067),
+(31, 'The Secret', 'Rhonda Byrne', '978-495770694', 2006, 'Self-help, Inspirational', 0x75706c6f6164732f7468652d7365637265742d393738313538323730313730375f68722e6a7067),
+(32, 'The Road', 'Cormac McCarthy', '978-123454484', 2006, 'Fiction, Dystopian', 0x75706c6f6164732f7468652d726f61642d32362e6a7067),
+(33, 'A Game of Thrones', 'George R.R. Martin', '978-895152732', 1996, 'Fantasy', 0x75706c6f6164732f474f544d5449322e6a7067),
+(34, 'The Chronicles of Narnia', 'C.S. Lewis', '978-566884303', 1950, 'Fantasy, Children\'s', 0x75706c6f6164732f6e61726e69612e6a7067);
 
 -- --------------------------------------------------------
 
@@ -128,7 +134,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `images`

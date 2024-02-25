@@ -16,6 +16,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <meta charset="UTF-8">
   <title>Welcome</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="title.css">
   <style>
     /* Your custom styles go here */
   </style>
@@ -24,7 +25,19 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 <body>
   <nav class="navbar navbar-expand-lg bg-transparent">
     <div class="container-fluid">
-      <img src="images\books-svgrepo-com.svg" alt="" style="width:35px; height:35px;">
+      <div class="title">
+        <span class="letter-a">A</span>
+        <span class="letter-l">l</span>
+        <span class="letter-i">i</span>
+        <span class="letter-m">m</span>
+        <span class="letter-b">b</span>
+        <span class="letter-r">r</span>
+        <span class="letter-a">a</span>
+        <span class="letter-r">r</span>
+        <span class="letter-y">y</span>
+      </div>
+      <img src="Images/icons8-book-50.png" alt="" style="margin-left: 5px;">
+
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

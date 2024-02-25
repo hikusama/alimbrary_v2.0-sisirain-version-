@@ -126,7 +126,11 @@ if(isset($_GET["book_id"]) && !empty(trim($_GET["book_id"]))){
                 </div>
             </div>
             <div class="card-footer">
-                <a href="books.php" class="btn btn-secondary">Back to Books</a>
+            <button class="btn btn-secondary btn-md disabled" data-toggle="tooltip" data-placement="top" title="Back to Books">
+                        <a href="books.php" class="text-light">
+                            <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </button>
             </div>
         </div>
     </div>
