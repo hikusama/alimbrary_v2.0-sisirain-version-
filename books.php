@@ -15,6 +15,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pub_year = trim($_POST["pub_year"]);
     $genre = trim($_POST["genre"]);
 
+    // Generate and check ISBN
+    do {
+        // Generate a random number for the first part of the ISBN (9 digits)
+        $random_number = mt_rand(100000000, 999999999);
+        
+        // Format the random number to match ISBN format (###-##########)
+        $isbn = "978-" . $random_number;
+
+        // Check if the generated ISBN already exists in the database
+        $sql_check_isbn = "SELECT * FROM books WHERE isbn = ?";
+        $stmt_check_isbn = mysqli_prepare($conn, $sql_check_isbn);
+        mysqli_stmt_bind_param($stmt_check_isbn, "s", $isbn);
+        mysqli_stmt_execute($stmt_check_isbn);
+        $result_check_isbn = mysqli_stmt_get_result($stmt_check_isbn);
+        $num_rows = mysqli_num_rows($result_check_isbn);
+    } while ($num_rows > 0); 
+
     // Validate title, author, isbn, publication year, and genre (you already have this code)
 
     // Check if file is uploaded without errors
@@ -45,23 +62,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $image_err = "No image file uploaded.";
     }
-
-    // Generate and check ISBN
-    do {
-        // Generate a random number for the first part of the ISBN (9 digits)
-        $random_number = mt_rand(100000000, 999999999);
-        
-        // Format the random number to match ISBN format (###-##########)
-        $isbn = "978-" . $random_number;
-
-        // Check if the generated ISBN already exists in the database
-        $sql_check_isbn = "SELECT * FROM books WHERE isbn = ?";
-        $stmt_check_isbn = mysqli_prepare($conn, $sql_check_isbn);
-        mysqli_stmt_bind_param($stmt_check_isbn, "s", $isbn);
-        mysqli_stmt_execute($stmt_check_isbn);
-        $result_check_isbn = mysqli_stmt_get_result($stmt_check_isbn);
-        $num_rows = mysqli_num_rows($result_check_isbn);
-    } while ($num_rows > 0); // Repeat until a unique ISBN is generated
 
     // Free the result set and close the statement
     mysqli_free_result($result_check_isbn);
@@ -105,9 +105,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
