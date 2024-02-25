@@ -46,8 +46,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $image_err = "No image file uploaded.";
     }
 
+    // Generate and check ISBN
+    do {
+        // Generate a random number for the first part of the ISBN (9 digits)
+        $random_number = mt_rand(100000000, 999999999);
+        
+        // Format the random number to match ISBN format (###-##########)
+        $isbn = "978-" . $random_number;
+
+        // Check if the generated ISBN already exists in the database
+        $sql_check_isbn = "SELECT * FROM books WHERE isbn = ?";
+        $stmt_check_isbn = mysqli_prepare($conn, $sql_check_isbn);
+        mysqli_stmt_bind_param($stmt_check_isbn, "s", $isbn);
+        mysqli_stmt_execute($stmt_check_isbn);
+        $result_check_isbn = mysqli_stmt_get_result($stmt_check_isbn);
+        $num_rows = mysqli_num_rows($result_check_isbn);
+    } while ($num_rows > 0); // Repeat until a unique ISBN is generated
+
+    // Free the result set and close the statement
+    mysqli_free_result($result_check_isbn);
+    mysqli_stmt_close($stmt_check_isbn);
+
     // Check input errors before inserting into database
     if (empty($title_err) && empty($author_err) && empty($isbn_err) && empty($pub_year_err) && empty($genre_err) && empty($image_err)) {
+        // Check if any of the required fields are empty
+        if (empty($title) || empty($author) || empty($isbn) || empty($pub_year) || empty($genre) || empty($image_path)) {
+            // Redirect to landing page or any other appropriate action
+            header("location: books.php");
+            exit();
+        }
+
         // Prepare an insert statement
         $sql = "INSERT INTO books (title, author, isbn, pub_year, genre, image_path) VALUES (?, ?, ?, ?, ?, ?)";
         if ($stmt = mysqli_prepare($conn, $sql)) {
@@ -75,9 +103,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Close statement
         mysqli_stmt_close($stmt);
     }
-
-    // Close connection
-    mysqli_close($conn);
 }
 ?>
 
