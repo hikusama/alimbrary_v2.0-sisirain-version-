@@ -171,11 +171,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </button>
                         </a>
 
-
-                        <button type="button" class="btn btn-success btn-md pull-right mr-2" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" data-placement="top" title="Add New Book">
-                            <i class="fa fa-plus-circle"></i>
-                        </button>
-
                         <button class="btn btn-secondary btn-md pull-right mr-2" type="button" id="refreshButton" data-toggle="tooltip" data-placement="top" title="Refresh">
                             <i class="fa fa-refresh"></i>
                         </button>
@@ -185,58 +180,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </button>
 
                         <input type="text" id="searchInput" class="form-control form-control-md pull-right mr-2" placeholder="Search books" style="width:200px;" data-toggle="tooltip" data-placement="top" title="Search books">
-
-
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="exampleModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Create book</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label>Title</label>
-                            <input type="text" name="title" class="form-control <?php echo (!empty($title_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $title; ?>">
-                            <span class="invalid-feedback"><?php echo $title_err; ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Author</label>
-                            <input type="text" name="author" class="form-control <?php echo (!empty($author_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $author; ?>">
-                            <span class="invalid-feedback"><?php echo $author_err; ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>ISBN</label>
-                            <input type="text" name="isbn" class="form-control <?php echo (!empty($isbn_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $isbn; ?>">
-                            <span class="invalid-feedback"><?php echo $isbn_err; ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Publication year</label>
-                            <input type="text" name="pub_year" class="form-control <?php echo (!empty($pub_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $pub_year; ?>">
-                            <span class="invalid-feedback"><?php echo $pub_year_err; ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Genre</label>
-                            <input type="text" name="genre" class="form-control <?php echo (!empty($genre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $genre; ?>">
-                            <span class="invalid-feedback"><?php echo $genre_err; ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Image</label>
-                            <input type="file" name="image" class="form-control-file">
-                            <span class="invalid-feedback"><?php echo $image_err; ?></span>
-                        </div>
-                        <input type="submit" class="btn btn-primary" value="Submit">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </form>
                 </div>
             </div>
         </div>
@@ -260,7 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         echo '<div class="d-flex justify-content-center align-items-center mt-2 " 
                                                 style="
                                                     width: auto;
-                                                    height: 220px;
+                                                    height: 220px; 
                                                 ">';
 
                                             // Display the image if image path exists
@@ -282,10 +226,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             echo '<p class="card-text text-center">ISBN: ' . $row['isbn'] . '</p>';
                                             echo '<p class="card-text text-center">Publication Year: ' . $row['pub_year'] . '</p>';
                                             echo '<p class="card-text text-center">Genre: ' . $row['genre'] . '</p>';
-                                            echo '<div class="d-flex flex-row justify-content-center align-items-center bg-secondary rounded p-2 mx-auto" style="max-width: 120px;">';
-                                                echo '<a href="viewbook.php?book_id=' . $row['book_id'] . '" class="mr-3 text-light" title="View Record" data-toggle="tooltip"><span class="fa fa-eye fa-lg"></span></a>';
-                                                echo '<a href="updatebook.php?book_id=' . $row['book_id'] . '" class="mr-3 text-light" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil fa-lg"></span></a>';
-                                                echo '<a href="deletebook.php?book_id=' . $row['book_id'] . '" class="text-light" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash fa-lg"></span></a>';
+                                            echo '<div class="d-flex flex-row justify-content-center align-items-center bg-secondary rounded p-2 mx-auto" style="max-width: 120px; margin-left: 1rem;">';
+                                                echo '<a href="viewbook.php?book_id=' . $row['book_id'] . '" class="mr-2 ml-2 text-light" title="View Record" data-toggle="tooltip"><span class="fa fa-eye fa-lg"></span></a>' ;
+                                                echo '<a href="borrowbook.php?book_id=' . $row['book_id'] . '" class="mr-2 ml-2 text-light" title="Borrow Book" data-toggle="tooltip"><span class="fa fa-hand-rock-o fa-lg"></span></a>';
                                             echo '</div>';
                                         echo '</div>';
                                     echo '</div>';
@@ -309,7 +252,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <button id="backToTopBtn" title="Go to top" style="height: 50px; width:50px;"><i class="fa fa-arrow-up"></i></button>
-
 
     <!-- Include Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
