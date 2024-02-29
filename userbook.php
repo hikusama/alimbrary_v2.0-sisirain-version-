@@ -1,4 +1,15 @@
 <?php
+// Initialize the session
+session_start();
+
+// Check if the user is logged in, if not then redirect him to login page
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+  header("location: login.php");
+  exit;
+}
+?>
+
+<?php
 // Include config file
 require_once "config.php";
 
@@ -155,6 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         #backToTopBtn:hover {
             background-color: rgba(0, 0, 0, 0.7);
         }
+        
     </style>
 </head>
 
@@ -165,7 +177,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-md-12">
                     <div class="mt-3 clearfix">
                         <h2 class="pull-left">Books</h2>
-                        <a href="welcome.php" class="text-light">
+                        <a href="userwelcome.php" class="text-light">
                             <button class="btn btn-outline-dark btn-md pull-right disabled" data-toggle="tooltip" data-placement="top" title="Back to Dashboard">
                                 <i class="fa fa-arrow-left" style="color: black;"></i>
                             </button>
@@ -227,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             echo '<p class="card-text text-center">Publication Year: ' . $row['pub_year'] . '</p>';
                                             echo '<p class="card-text text-center">Genre: ' . $row['genre'] . '</p>';
                                             echo '<div class="d-flex flex-row justify-content-center align-items-center bg-secondary rounded p-2 mx-auto" style="max-width: 120px; margin-left: 1rem;">';
-                                                echo '<a href="viewbook.php?book_id=' . $row['book_id'] . '" class="mr-2 ml-2 text-light" title="View Record" data-toggle="tooltip"><span class="fa fa-eye fa-lg"></span></a>' ;
+                                                echo '<a href="userviewbook.php?book_id=' . $row['book_id'] . '" class="mr-2 ml-2 text-light" title="View Record" data-toggle="tooltip"><span class="fa fa-eye fa-lg"></span></a>' ;
                                                 echo '<a href="borrowbook.php?book_id=' . $row['book_id'] . '" class="mr-2 ml-2 text-light" title="Borrow Book" data-toggle="tooltip"><span class="fa fa-hand-rock-o fa-lg"></span></a>';
                                             echo '</div>';
                                         echo '</div>';
@@ -258,28 +270,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#searchButton").click(function() {
-                var searchText = $("#searchInput").val().toLowerCase();
-                $(".card").each(function() {
-                    var title = $(this).find(".card-title").text().toLowerCase();
-                    var author = $(this).find(".card-text").eq(0).text().toLowerCase();
-                    var isbn = $(this).find(".card-text").eq(1).text().toLowerCase();
-                    var pubYear = $(this).find(".card-text").eq(2).text().toLowerCase();
-                    var genre = $(this).find(".card-text").eq(3).text().toLowerCase();
-                    if (title.indexOf(searchText) === -1 && author.indexOf(searchText) === -1 && isbn.indexOf(searchText) === -1 && pubYear.indexOf(searchText) === -1 && genre.indexOf(searchText) === -1) {
-                        $(this).hide();
-                    } else {
-                        $(this).show();
-                    }
-                });
-            });
-
-            // Refresh button click event
-            $("#refreshButton").click(function() {
-                location.reload(); // Reload the page
-            });
+         $(document).ready(function() {
+    $("#searchButton").click(function() {
+        var searchText = $("#searchInput").val().trim().toLowerCase(); // Remove leading and trailing spaces
+        $(".card").each(function() {
+            var title = $(this).find(".card-title").text().toLowerCase();
+            var author = $(this).find(".card-text").eq(0).text().toLowerCase();
+            var isbn = $(this).find(".card-text").eq(1).text().toLowerCase();
+            var pubYear = $(this).find(".card-text").eq(2).text().toLowerCase();
+            var genre = $(this).find(".card-text").eq(3).text().toLowerCase();
+            if (title.indexOf(searchText) === -1 && author.indexOf(searchText) === -1 && isbn.indexOf(searchText) === -1 && pubYear.indexOf(searchText) === -1 && genre.indexOf(searchText) === -1) {
+                $(this).parent('.col').hide(); // Hide the entire card container
+            } else {
+                $(this).parent('.col').show(); // Show the entire card container
+            }
         });
+    });
+
+    // Refresh button click event
+    $("#refreshButton").click(function() {
+        location.reload(); // Reload the page
+    });
+});
     </script>
 
     <script>

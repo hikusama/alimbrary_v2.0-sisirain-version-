@@ -2,6 +2,16 @@
 // Initialize the session
 session_start();
 
+// If user is already logged in, redirect to appropriate welcome page
+if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
+    if ($_SESSION["user_type"] == "admin") {
+        header("location: welcomeadmin.php");
+    } else {
+        header("location: userwelcome.php");
+    }
+    exit;
+}
+
 // Include config file
 require_once "config.php";
 
@@ -62,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             // Redirect user based on user type
                             if ($user_type == "admin") {
-                                header("location: welcome.php");
+                                header("location: welcomeadmin.php");
                             } 
                             else {
                                 header("location: userwelcome.php");

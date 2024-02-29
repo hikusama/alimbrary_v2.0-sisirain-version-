@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2024 at 09:31 PM
+-- Generation Time: Feb 29, 2024 at 06:32 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,7 @@ CREATE TABLE `books` (
 --
 
 INSERT INTO `books` (`book_id`, `title`, `author`, `isbn`, `pub_year`, `genre`, `image_path`) VALUES
-(17, 'Harry Potter and the Sorcerer\'s Stone', 'J.K. Rowling', '978-0590353427', 1997, 'Fantasy', 0x75706c6f6164732f48617272795f506f747465725f616e645f7468655f5068696c6f736f7068657227735f53746f6e655f426f6f6b5f436f7665722e6a7067),
+(17, 'Harry Potter and the Sorcerer\'s Stone', 'J.K. Rowling', '978-0590353427', 1997, 'Fantasy', 0x75706c6f6164732f686172727920706f7474657220312e6a7067),
 (18, 'To Kill a Mockingbird', 'Harper Lee', '978-0061120084', 1960, 'Fiction, Classic', 0x75706c6f6164732f3132303070782d546f5f4b696c6c5f615f4d6f636b696e67626972645f2866697273745f65646974696f6e5f636f766572292e6a7067),
 (19, 'The Great Gatsby', 'F. Scott Fitzgerald', '978-0743273565', 1925, 'Fiction, Classic', 0x75706c6f6164732f5468655f47726561745f4761747362795f436f7665725f313932355f5265746f75636865642e6a7067),
 (20, '1984', 'George Orwell', '978-0451524935', 1949, 'Fiction, Dystopian', 0x75706c6f6164732f313938342e6a7067),
@@ -58,8 +58,15 @@ INSERT INTO `books` (`book_id`, `title`, `author`, `isbn`, `pub_year`, `genre`, 
 (31, 'The Secret', 'Rhonda Byrne', '978-495770694', 2006, 'Self-help, Inspirational', 0x75706c6f6164732f7468652d7365637265742d393738313538323730313730375f68722e6a7067),
 (33, 'A Game of Thrones', 'George R.R. Martin', '978-895152732', 1996, 'Fantasy', 0x75706c6f6164732f474f544d5449322e6a7067),
 (34, 'The Chronicles of Narnia', 'C.S. Lewis', '978-566884303', 1950, 'Fantasy, Children\'s', 0x75706c6f6164732f6e61726e69612e6a7067),
-(35, 'Noli Me Tangere', 'Jose Rizal', '978-533703972', 1887, '1887', 0x75706c6f6164732f6e6f6c69206d652074616e676572652e6a7067),
-(36, 'El Filibusterismo', 'Jose Rizal', '978-985906966', 1891, 'Fiction, Classic', 0x75706c6f6164732f656c2066696c692e6a7067);
+(35, 'Noli Me Tangere', 'Jose Rizal', '978-533703972', 1887, 'Fiction, Classic', 0x75706c6f6164732f6e6f6c69206d652074616e676572652e6a7067),
+(36, 'El Filibusterismo', 'Jose Rizal', '978-985906966', 1891, 'Fiction, Classic', 0x75706c6f6164732f656c2066696c692e6a7067),
+(37, 'ABNKKBSNPLAko?! (Mga Kwentong Chalk ni Bob Ong)', 'Bob Ong', '978-287710978', 2001, 'Humor, Memoir', 0x75706c6f6164732f41424e4b4b42534e504c416b6f212e6a7067),
+(38, 'Alamat ng Gubat', 'Bob Ong', '978-770787012', 2003, 'Fiction, Satire', 0x75706c6f6164732f416c616d61745f6e675f47756261742e6a7067),
+(39, 'Naruto Volume 1: Uzumaki Naruto', 'Masashi Kishimoto', '978-865252755', 2003, 'Shonen, Action, Adventure', 0x75706c6f6164732f6e617275746f2d766f6c2d312e6a7067),
+(40, 'One Piece Volume 1: Romance Dawn', 'Eiichiro Oda', '978-750763248', 2003, 'Shonen, Action, Adventure', 0x75706c6f6164732f6f702d726f6d616e63652d6461776e2e6a7067),
+(41, 'Attack on Titan Volume 1: The Fall of Shiganshina', 'Hajime Isayama', '978-781830480', 2012, 'Shonen, Dark Fantasy, Action', 0x75706c6f6164732f5368696e67656b695f6e6f5f4b796f6a696e5f6d616e67615f766f6c756d655f312e6a7067),
+(42, 'Death Note Volume 1: Boredom', 'Tsugumi Ohba', '978-327638769', 2005, 'Shonen, Psychological Thriller, Mystery', 0x75706c6f6164732f64656174686e6f74652e6a7067),
+(43, 'Fullmetal Alchemist Volume 1: The Land of Sand', 'Hiromu Arakawa', '978-692597068', 2005, 'Shonen, Adventure, Fantasy', 0x75706c6f6164732f666d612e6a7067);
 
 -- --------------------------------------------------------
 
@@ -99,9 +106,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `created_at`, `user_type`) VALUES
 (14, 'admin', '$2y$10$hx7IQKH9AedGbB9t7NASMeAEEdwUM3auxfpFUm5w5l1epjKmH5pqa', '2024-02-19 00:01:30', 'admin'),
-(16, 'user1', '$2y$10$QHiglfN5XyPw1CWcqG3DseIp4Zb8Jewll0.LzM.3JozIk7aB3j3cS', '2024-02-19 11:12:02', 'user'),
-(17, 'qwerty', '$2y$10$C3Eh2UN9PZrmWjBXLaJ7QeSI70jNL03xeIUaiAb40TAx6VseOtGZ6', '2024-02-19 13:11:25', 'user'),
-(18, 'arjecdizon', '$2y$10$howSqmIwj7TidaNn29YTzuNtWn8raWZRLz9LcvinTy91..9.6eQiO', '2024-02-22 23:36:23', 'user');
+(19, 'user01', '$2y$10$FpYFmnsax.7e3/A4SWovX.u1HzSINL4DY.7q0m8LgOv63W/XS9Gmi', '2024-02-29 17:32:35', 'user');
 
 --
 -- Indexes for dumped tables
@@ -134,7 +139,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `books`
 --
 ALTER TABLE `books`
-  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `images`
@@ -146,7 +151,7 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

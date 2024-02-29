@@ -18,7 +18,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="title.css">
   <style>
-    /* Your custom styles go here */
+     /* Add hover effect to navbar links */
+  .navbar-nav .nav-link:hover {
+    color: #ffffff; /* Change text color on hover */
+    background-color: #6c757d; /* Change background color on hover */
+    border-radius: 5px;
+  }
   </style>
 </head>
 
@@ -53,8 +58,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             <a class="nav-link" href="userbook.php">Books</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><b>
+            <?php echo htmlspecialchars($_SESSION["username"]); ?> </b>
             </a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="#">Action</a></li>
