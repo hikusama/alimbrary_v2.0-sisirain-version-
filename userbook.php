@@ -128,6 +128,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Include Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Include Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         /* Fixed position for the header container */
         .header-container {
@@ -168,6 +172,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         
     </style>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();   
+        });
+    </script>
 </head>
 
 <body>
@@ -191,7 +200,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <i class="fa fa-search"></i>
                         </button>
 
-                        <input type="text" id="searchInput" class="form-control form-control-md pull-right mr-2" placeholder="Search books" style="width:200px;" data-toggle="tooltip" data-placement="top" title="Search books">
+                        <input type="text" id="searchInput" class="form-control form-control-md pull-right mr-2" placeholder="Search books" style="width:200px;">
                     </div>
                 </div>
             </div>
@@ -211,39 +220,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if ($result = mysqli_query($conn, $sql)) {
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_array($result)) {
-                                echo '<div class="col sm-2 mb-4">';
-                                    echo '<div class="card border-dark h-100">';
-                                        echo '<div class="d-flex justify-content-center align-items-center mt-2 " 
-                                                style="
-                                                    width: auto;
-                                                    height: 220px; 
-                                                ">';
+                                echo '<div class="col mb-4">';
+                                echo '<div class="card h-100 border-primary">';
+                                echo '<div class="d-flex justify-content-center align-items-center mt-2" style="height: 240px;">';
 
-                                            // Display the image if image path exists
-                                            if (!empty($row['image_path'])) {
-                                                echo '<img src="' . $row['image_path'] . '
-                                                                "alt="Book Image" 
-                                                                style="
-                                                                    max-height: 200px;
-                                                                    max-width: 150px;
-                                                                ">';
-                                            } else {
-                                                echo '<span>No image available</span>';
-                                            }
-                                        echo '</div>';
+                                // Display the image if image path exists
+                                if (!empty($row['image_path'])) {
+                                    echo '<img src="' . $row['image_path'] . '" alt="Book Image" style="max-height: 200px; max-width: 150px;">';
+                                } else {
+                                    echo '<span>No image available</span>';
+                                }
+                                echo '</div>';
 
-                                        echo '<div class="card-body d-flex flex-column" style="height: 300px;">';
-                                            echo '<h5 class="card-title text-center" style="height: 50px">' . $row['title'] . '</h5>';
-                                            echo '<p class="card-text text-center">Author: ' . $row['author'] . '</p>';
-                                            echo '<p class="card-text text-center">ISBN: ' . $row['isbn'] . '</p>';
-                                            echo '<p class="card-text text-center">Publication Year: ' . $row['pub_year'] . '</p>';
-                                            echo '<p class="card-text text-center">Genre: ' . $row['genre'] . '</p>';
-                                            echo '<div class="d-flex flex-row justify-content-center align-items-center bg-secondary rounded p-2 mx-auto" style="max-width: 120px; margin-left: 1rem;">';
-                                                echo '<a href="userviewbook.php?book_id=' . $row['book_id'] . '" class="mr-2 ml-2 text-light" title="View Record" data-toggle="tooltip"><span class="fa fa-eye fa-lg"></span></a>' ;
-                                                echo '<a href="borrowbook.php?book_id=' . $row['book_id'] . '" class="mr-2 ml-2 text-light" title="Borrow Book" data-toggle="tooltip"><span class="fa fa-hand-rock-o fa-lg"></span></a>';
-                                            echo '</div>';
-                                        echo '</div>';
-                                    echo '</div>';
+                                echo '<div class="card-body d-flex flex-column">';
+                                echo '<h5 class="card-title text-center">' . $row['title'] . '</h5>';
+                                echo '<p class="card-text text-center">Author: ' . $row['author'] . '</p>';
+                                echo '<p class="card-text text-center">ISBN: ' . $row['isbn'] . '</p>';
+                                echo '<p class="card-text text-center">Publication Year: ' . $row['pub_year'] . '</p>';
+                                echo '<p class="card-text text-center">Genre: ' . $row['genre'] . '</p>';
+                                // Check availability and apply appropriate styling
+                                $availability = $row['availability'];
+                                $badgeClass = ($availability == 'Available') ? 'badge-warning' : 'badge-danger';
+                                echo '<p class="card-text text-center">Availability: <span class="badge ' . $badgeClass . ' text-light">' . $availability . '</span></p>';
+
+                                // Move the links to the bottom of the card
+                                echo '<div class="mt-auto d-flex flex-row justify-content-center align-items-center bg-secondary rounded p-2 mx-auto" style="max-width: 100px;">';
+                                echo '<a href="userviewbook.php?book_id=' . $row['book_id'] . '" class="mr-3 text-light" title="View Record" data-toggle="tooltip"><span class="fa fa-eye fa-lg"></span></a>';
+                                echo '<a href="borrow.php?book_id=' . $row['book_id'] . '" class="mr-1 text-light" title="Borrow book" data-toggle="tooltip"><span class="fa fa-hand-rock-o fa-lg"></span></a>';
+                               
+                                echo '</div>';
+                                echo '</div>';
+                                echo '</div>';
                                 echo '</div>';
                             }
                             // Free result set
@@ -263,12 +270,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
+
     <button id="backToTopBtn" title="Go to top" style="height: 50px; width:50px;"><i class="fa fa-arrow-up"></i></button>
 
-    <!-- Include Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
     <script>
          $(document).ready(function() {
     $("#searchButton").click(function() {

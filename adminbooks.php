@@ -4,8 +4,8 @@ session_start();
 
 // Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
-  header("location: login.php");
-  exit;
+    header("location: login.php");
+    exit;
 }
 ?>
 
@@ -14,7 +14,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 require_once "config.php";
 
 // Initialize variables
-$title = $author = $isbn = $pub_year = $genre = "";
+$title = $author = $isbn = $pub_year = $genre = $availability = "";
 $title_err = $author_err = $isbn_err = $pub_year_err = $genre_err = $image_err = "";
 
 // Processing form data when form is submitted
@@ -25,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $isbn = trim($_POST["isbn"]);
     $pub_year = trim($_POST["pub_year"]);
     $genre = trim($_POST["genre"]);
+    $availability = $_POST["availability"] ?? "";
 
     // Generate and check ISBN
     do {
@@ -88,10 +89,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Prepare an insert statement
-        $sql = "INSERT INTO books (title, author, isbn, pub_year, genre, image_path) VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO books (title, author, isbn, pub_year, genre, image_path, availability) VALUES (?, ?, ?, ?, ?, ?, ?)";
         if ($stmt = mysqli_prepare($conn, $sql)) {
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssssss", $param_title, $param_author, $param_isbn, $param_pub_year, $param_genre, $param_image_path);
+            mysqli_stmt_bind_param($stmt, "sssssss", $param_title, $param_author, $param_isbn, $param_pub_year, $param_genre, $param_image_path, $param_availability);
 
             // Set parameters
             $param_title = $title;
@@ -100,6 +101,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $param_pub_year = $pub_year;
             $param_genre = $genre;
             $param_image_path = $image_path;
+            $param_availability = $availability; // New parameter for availability
 
             // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt)) {
@@ -110,6 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "Oops! Something went wrong. Please try again later.";
             }
         }
+
 
         // Close statement
         mysqli_stmt_close($stmt);
@@ -124,10 +127,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Books section</title>
-    <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Include Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         /* Fixed position for the header container */
         .header-container {
@@ -167,6 +171,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: rgba(0, 0, 0, 0.7);
         }
     </style>
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 </head>
 
 <body>
@@ -195,7 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <i class="fa fa-search"></i>
                         </button>
 
-                        <input type="text" id="searchInput" class="form-control form-control-md pull-right mr-2" placeholder="Search books" style="width:200px;" data-toggle="tooltip" data-placement="top" title="Search books">
+                        <input type="text" id="searchInput" class="form-control form-control-md pull-right mr-2" placeholder="Search books" style="width:200px;">
 
 
                     </div>
@@ -205,53 +214,65 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="modal fade" id="exampleModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Create book</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label>Title</label>
-                            <input type="text" name="title" class="form-control <?php echo (!empty($title_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $title; ?>">
-                            <span class="invalid-feedback"><?php echo $title_err; ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Author</label>
-                            <input type="text" name="author" class="form-control <?php echo (!empty($author_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $author; ?>">
-                            <span class="invalid-feedback"><?php echo $author_err; ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>ISBN</label>
-                            <input type="text" name="isbn" class="form-control <?php echo (!empty($isbn_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $isbn; ?>">
-                            <span class="invalid-feedback"><?php echo $isbn_err; ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Publication year</label>
-                            <input type="text" name="pub_year" class="form-control <?php echo (!empty($pub_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $pub_year; ?>">
-                            <span class="invalid-feedback"><?php echo $pub_year_err; ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Genre</label>
-                            <input type="text" name="genre" class="form-control <?php echo (!empty($genre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $genre; ?>">
-                            <span class="invalid-feedback"><?php echo $genre_err; ?></span>
-                        </div>
-                        <div class="form-group">
-                            <label>Image</label>
-                            <input type="file" name="image" class="form-control-file">
-                            <span class="invalid-feedback"><?php echo $image_err; ?></span>
-                        </div>
-                        <input type="submit" class="btn btn-primary" value="Submit">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </form>
-                </div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-book"></i> Add Book</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" name="title" class="form-control <?php echo (!empty($title_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $title; ?>">
+                        <span class="invalid-feedback"><?php echo $title_err; ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Author</label>
+                        <input type="text" name="author" class="form-control <?php echo (!empty($author_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $author; ?>">
+                        <span class="invalid-feedback"><?php echo $author_err; ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label>ISBN</label>
+                        <input type="text" name="isbn" class="form-control <?php echo (!empty($isbn_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $isbn; ?>">
+                        <span class="invalid-feedback"><?php echo $isbn_err; ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Publication Year</label>
+                        <input type="text" name="pub_year" class="form-control <?php echo (!empty($pub_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $pub_year; ?>">
+                        <span class="invalid-feedback"><?php echo $pub_year_err; ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Genre</label>
+                        <input type="text" name="genre" class="form-control <?php echo (!empty($genre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $genre; ?>">
+                        <span class="invalid-feedback"><?php echo $genre_err; ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Availability</label>
+                        <select name="availability" class="form-control <?php echo (!empty($availability_err)) ? 'is-invalid' : ''; ?>">
+                            <option value="Available">Available</option>
+                            <option value="Not Available">Not Available</option>
+                        </select>
+                        <span class="invalid-feedback"><?php echo $availability_err; ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Image</label>
+                        <input type="file" name="image" class="form-control-file <?php echo (!empty($image_err)) ? 'is-invalid' : ''; ?>">
+                        <span class="invalid-feedback"><?php echo $image_err; ?></span>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="button" class="btn btn-secondary ml-2" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+
 
     <div class="container-fluid">
         <div class="row">
@@ -266,40 +287,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if ($result = mysqli_query($conn, $sql)) {
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_array($result)) {
-                                echo '<div class="col sm-2 mb-4">';
-                                    echo '<div class="card border-dark h-100">';
-                                        echo '<div class="d-flex justify-content-center align-items-center mt-2 " 
-                                                style="
-                                                    width: auto;
-                                                    height: 220px;
-                                                ">';
+                                echo '<div class="col mb-4">';
+                                echo '<div class="card h-100 border-primary">';
+                                echo '<div class="d-flex justify-content-center align-items-center mt-2" style="height: 240px;">';
 
-                                            // Display the image if image path exists
-                                            if (!empty($row['image_path'])) {
-                                                echo '<img src="' . $row['image_path'] . '
-                                                                "alt="Book Image" 
-                                                                style="
-                                                                    max-height: 200px;
-                                                                    max-width: 150px;
-                                                                ">';
-                                            } else {
-                                                echo '<span>No image available</span>';
-                                            }
-                                        echo '</div>';
+                                // Display the image if image path exists
+                                if (!empty($row['image_path'])) {
+                                    echo '<img src="' . $row['image_path'] . '" alt="Book Image" style="max-height: 200px; max-width: 150px;">';
+                                } else {
+                                    echo '<span>No image available</span>';
+                                }
+                                echo '</div>';
 
-                                        echo '<div class="card-body d-flex flex-column" style="height: 300px;">';
-                                            echo '<h5 class="card-title text-center" style="height: 50px">' . $row['title'] . '</h5>';
-                                            echo '<p class="card-text text-center">Author: ' . $row['author'] . '</p>';
-                                            echo '<p class="card-text text-center">ISBN: ' . $row['isbn'] . '</p>';
-                                            echo '<p class="card-text text-center">Publication Year: ' . $row['pub_year'] . '</p>';
-                                            echo '<p class="card-text text-center">Genre: ' . $row['genre'] . '</p>';
-                                            echo '<div class="d-flex flex-row justify-content-center align-items-center bg-secondary rounded p-2 mx-auto" style="max-width: 120px;">';
-                                                echo '<a href="adminviewbook.php?book_id=' . $row['book_id'] . '" class="mr-3 text-light" title="View Record" data-toggle="tooltip"><span class="fa fa-eye fa-lg"></span></a>';
-                                                echo '<a href="updatebook.php?book_id=' . $row['book_id'] . '" class="mr-3 text-light" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil fa-lg"></span></a>';
-                                                echo '<a href="deletebook.php?book_id=' . $row['book_id'] . '" class="text-light" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash fa-lg"></span></a>';
-                                            echo '</div>';
-                                        echo '</div>';
-                                    echo '</div>';
+                                echo '<div class="card-body d-flex flex-column">';
+                                echo '<h5 class="card-title text-center">' . $row['title'] . '</h5>';
+                                echo '<p class="card-text text-center">Author: ' . $row['author'] . '</p>';
+                                echo '<p class="card-text text-center">ISBN: ' . $row['isbn'] . '</p>';
+                                echo '<p class="card-text text-center">Publication Year: ' . $row['pub_year'] . '</p>';
+                                echo '<p class="card-text text-center">Genre: ' . $row['genre'] . '</p>';
+                                // Check availability and apply appropriate styling
+                                $availability = $row['availability'];
+                                $badgeClass = ($availability == 'Available') ? 'badge-warning' : 'badge-danger';
+                                echo '<p class="card-text text-center">Availability: <span class="badge ' . $badgeClass . ' text-light">' . $availability . '</span></p>';
+
+                                // Move the links to the bottom of the card
+                                echo '<div class="mt-auto d-flex flex-row justify-content-center align-items-center bg-secondary rounded p-2 mx-auto" style="max-width: 120px;">';
+                                echo '<a href="adminviewbook.php?book_id=' . $row['book_id'] . '" class="mr-3 text-light" title="View Record" data-toggle="tooltip"><span class="fa fa-eye fa-lg"></span></a>';
+                                echo '<a href="updatebook.php?book_id=' . $row['book_id'] . '" class="mr-3 text-light" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil fa-lg"></span></a>';
+                                echo '<a href="deletebook.php?book_id=' . $row['book_id'] . '" class="text-light" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash fa-lg"></span></a>';
+                                echo '</div>';
+                                echo '</div>';
+                                echo '</div>';
                                 echo '</div>';
                             }
                             // Free result set
@@ -319,36 +337,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
+
+
     <button id="backToTopBtn" title="Go to top" style="height: 50px; width:50px;"><i class="fa fa-arrow-up"></i></button>
 
 
-    <!-- Include Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <script>
         $(document).ready(function() {
-    $("#searchButton").click(function() {
-        var searchText = $("#searchInput").val().trim().toLowerCase(); // Remove leading and trailing spaces
-        $(".card").each(function() {
-            var title = $(this).find(".card-title").text().toLowerCase();
-            var author = $(this).find(".card-text").eq(0).text().toLowerCase();
-            var isbn = $(this).find(".card-text").eq(1).text().toLowerCase();
-            var pubYear = $(this).find(".card-text").eq(2).text().toLowerCase();
-            var genre = $(this).find(".card-text").eq(3).text().toLowerCase();
-            if (title.indexOf(searchText) === -1 && author.indexOf(searchText) === -1 && isbn.indexOf(searchText) === -1 && pubYear.indexOf(searchText) === -1 && genre.indexOf(searchText) === -1) {
-                $(this).parent('.col').hide(); // Hide the entire card container
-            } else {
-                $(this).parent('.col').show(); // Show the entire card container
-            }
-        });
-    });
+            $("#searchButton").click(function() {
+                var searchText = $("#searchInput").val().trim().toLowerCase(); // Remove leading and trailing spaces
+                $(".card").each(function() {
+                    var title = $(this).find(".card-title").text().toLowerCase();
+                    var author = $(this).find(".card-text").eq(0).text().toLowerCase();
+                    var isbn = $(this).find(".card-text").eq(1).text().toLowerCase();
+                    var pubYear = $(this).find(".card-text").eq(2).text().toLowerCase();
+                    var genre = $(this).find(".card-text").eq(3).text().toLowerCase();
+                    if (title.indexOf(searchText) === -1 && author.indexOf(searchText) === -1 && isbn.indexOf(searchText) === -1 && pubYear.indexOf(searchText) === -1 && genre.indexOf(searchText) === -1) {
+                        $(this).parent('.col').hide(); // Hide the entire card container
+                    } else {
+                        $(this).parent('.col').show(); // Show the entire card container
+                    }
+                });
+            });
 
-    // Refresh button click event
-    $("#refreshButton").click(function() {
-        location.reload(); // Reload the page
-    });
-});
+            // Refresh button click event
+            $("#refreshButton").click(function() {
+                location.reload(); // Reload the page
+            });
+        });
     </script>
 
     <script>

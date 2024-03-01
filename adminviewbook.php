@@ -3,7 +3,7 @@
 require_once "config.php";
 
 // Initialize variables
-$book_id = $title = $author = $isbn = $pub_year = $genre = $image_path = "";
+$book_id = $title = $author = $isbn = $pub_year = $genre = $image_path = $availability = "";
 
 // Check if book_id parameter is provided in the URL
 if(isset($_GET["book_id"]) && !empty(trim($_GET["book_id"]))){
@@ -32,6 +32,7 @@ if(isset($_GET["book_id"]) && !empty(trim($_GET["book_id"]))){
                 $pub_year = $row["pub_year"];
                 $genre = $row["genre"];
                 $image_path = $row["image_path"];
+                $availability = $row["availability"];
             } else{
                 // URL doesn't contain valid book_id parameter, redirect to error page
                 header("location: error.php");
@@ -65,6 +66,10 @@ if(isset($_GET["book_id"]) && !empty(trim($_GET["book_id"]))){
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Include Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Include Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         /* Adjust styles for card layout */
         .card {
@@ -82,6 +87,12 @@ if(isset($_GET["book_id"]) && !empty(trim($_GET["book_id"]))){
             margin-bottom: 20px;
         }
     </style>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();   
+        });
+    </script>
+</head>
 </head>
 
 <body>
@@ -121,22 +132,22 @@ if(isset($_GET["book_id"]) && !empty(trim($_GET["book_id"]))){
                                 <th>Genre</th>
                                 <td><?php echo htmlspecialchars($genre); ?></td>
                             </tr>
+                            <tr>
+                                <th>Availability</th>
+                                <td><?php echo htmlspecialchars($availability); ?></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="card-footer">
-            <a href="adminbooks.php" class="text-light"><button class="btn btn-secondary btn-md disabled" data-toggle="tooltip" data-placement="top" title="Back to Books">               
-                            <i class="fa fa-arrow-left"></i>                    
-                    </button></a>
+                <a href="adminbooks.php" class="text-light">
+                    <button class="btn btn-secondary btn-md disabled" data-toggle="tooltip" data-placement="top" title="Back to Books">               
+                        <i class="fa fa-arrow-left"></i>                    
+                    </button>
+                </a>
             </div>
         </div>
-    </div>
-
-    <!-- Include Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </div>    
 </body>
-
 </html>

@@ -3,7 +3,7 @@
 require_once "config.php";
 
 // Initialize variables
-$title = $author = $isbn = $pub_year = $genre = "";
+$title = $author = $isbn = $pub_year = $genre = $availability = "";
 $title_err = $author_err = $isbn_err = $pub_year_err = $genre_err = $image_err = "";
 
 // Processing form data when form is submitted
@@ -14,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $isbn = trim($_POST["isbn"]);
     $pub_year = trim($_POST["pub_year"]);
     $genre = trim($_POST["genre"]);
+    $availability = $_POST["availability"] ?? "";
 
     // Validate title, author, isbn, publication year, and genre (you already have this code)
 
@@ -56,10 +57,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check input errors before updating the database
     if (empty($title_err) && empty($author_err) && empty($isbn_err) && empty($pub_year_err) && empty($genre_err) && empty($image_err)) {
         // Prepare an update statement
-        $sql = "UPDATE books SET title=?, author=?, isbn=?, pub_year=?, genre=?, image_path=? WHERE book_id=?";
+        $sql = "UPDATE books SET title=?, author=?, isbn=?, pub_year=?, genre=?, availability=?, image_path=? WHERE book_id=?";
         if ($stmt = mysqli_prepare($conn, $sql)) {
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssssssi", $param_title, $param_author, $param_isbn, $param_pub_year, $param_genre, $param_image_path, $param_book_id);
+            mysqli_stmt_bind_param($stmt, "sssssssi", $param_title, $param_author, $param_isbn, $param_pub_year, $param_genre, $param_availability, $param_image_path, $param_book_id);
 
             // Set parameters
             $param_title = $title;
@@ -67,6 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $param_isbn = $isbn;
             $param_pub_year = $pub_year;
             $param_genre = $genre;
+            $param_availability = $availability; // Add this line to set the availability parameter
             $param_image_path = $image_path;
             $param_book_id = $_POST["book_id"];
 
@@ -79,7 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo "Oops! Something went wrong. Please try again later.";
             }
         }
-
         // Close statement
         mysqli_stmt_close($stmt);
     }
@@ -116,7 +117,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $isbn = $row["isbn"];
                     $pub_year = $row["pub_year"];
                     $genre = $row["genre"];
+                    $availability = $row["availability"];
                     $image_path = $row["image_path"];
+
                 } else {
                     // URL doesn't contain valid book_id parameter. Redirect to error page
                     header("location: error.php");
@@ -151,64 +154,120 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Include Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        
-    </style>
-</head>
-
-<body>
-    <div class="container" style="max-width: 400px;">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="my-4">Update Book</h2>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"
-                    enctype="multipart/form-data">
-                    <input type="hidden" name="book_id" value="<?php echo $book_id; ?>">
-                    <input type="hidden" name="current_image_path" value="<?php echo $image_path; ?>">
-                    <div class="form-group">
-                        <label>Title</label>
-                        <input type="text" name="title" class="form-control" value="<?php echo $title; ?>">
-                    </div>
-                    <div class="form-group">
-                        <label>Author</label>
-                        <input type="text" name="author" class="form-control" value="<?php echo $author; ?>">
-                    </div>
-                    <div class="form-group">
-                        <label>ISBN</label>
-                        <input type="text" name="isbn" class="form-control" value="<?php echo $isbn; ?>">
-                    </div>
-                    <div class="form-group">
-                        <label>Publication year</label>
-                        <input type="text" name="pub_year" class="form-control" value="<?php echo $pub_year; ?>">
-                    </div>
-                    <div class="form-group">
-                        <label>Genre</label>
-                        <input type="text" name="genre" class="form-control" value="<?php echo $genre; ?>">
-                    </div>
-                    <div class="form-group">
-                        <label>Current Image</label>
-                        <?php if (!empty($image_path)): ?>
-                            <img src="<?php echo $image_path; ?>" alt="Current Image" style="max-width: 200px;">
-                        <?php else: ?>
-                            <span>No image available</span>
-                        <?php endif; ?>
-                    </div>
-                    <div class="form-group">
-                        <label>New Image</label>
-                        <input type="file" name="image" class="form-control-file">
-                        <span class="text-danger"><?php echo $image_err; ?></span>
-                    </div>
-                    <input type="submit" class="btn btn-primary mb-2" value="Update">
-                    <a href="books.php" class="btn btn-secondary ml-2 mb-2">Cancel</a>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <!-- Include Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+    <style>
 
+    </style>
+</head>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Book</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+        }
+        h2 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            font-weight: bold;
+        }
+        .form-control {
+            border-radius: 5px;
+        }
+        .btn-primary, .btn-secondary {
+            border-radius: 5px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+        .btn-primary:hover, .btn-secondary:hover {
+            background-color: #0056b3;
+        }
+        .text-danger {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Update Book</h2>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="book_id" value="<?php echo $book_id; ?>">
+            <input type="hidden" name="current_image_path" value="<?php echo $image_path; ?>">
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" name="title" class="form-control" value="<?php echo $title; ?>">
+            </div>
+            <div class="form-group">
+                <label>Author</label>
+                <input type="text" name="author" class="form-control" value="<?php echo $author; ?>">
+            </div>
+            <div class="form-group">
+                <label>ISBN</label>
+                <input type="text" name="isbn" class="form-control" value="<?php echo $isbn; ?>">
+            </div>
+            <div class="form-group">
+                <label>Publication Year</label>
+                <input type="text" name="pub_year" class="form-control" value="<?php echo $pub_year; ?>">
+            </div>
+            <div class="form-group">
+                <label>Genre</label>
+                <input type="text" name="genre" class="form-control" value="<?php echo $genre; ?>">
+            </div>
+            <div class="form-group">
+                <label>Availability</label>
+                <select name="availability" class="form-control">
+                    <option value="Available" <?php if ($availability == 'Available') echo 'selected'; ?>>Available</option>
+                    <option value="Not Available" <?php if ($availability == 'Not Available') echo 'selected'; ?>>Not Available</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Current Image</label>
+                <?php if (!empty($image_path)) : ?>
+                    <br>
+                    <img src="<?php echo $image_path; ?>" alt="Current Image" style="max-width: 200px;">
+                <?php else : ?>
+                    <span>No image available</span>
+                <?php endif; ?>
+            </div>
+            <div class="form-group">
+                <label>New Image</label>
+                <input type="file" name="image" class="form-control-file">
+                <span class="text-danger"><?php echo $image_err; ?></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Update">
+                <a href="adminbooks.php" class="btn btn-secondary ml-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
 </html>
