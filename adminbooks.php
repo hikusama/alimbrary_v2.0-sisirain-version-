@@ -235,8 +235,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </button>
 
                         <input type="text" id="searchInput" class="form-control form-control-md pull-right mr-2" placeholder="Search books" style="width:200px;">
-
-
                     </div>
                 </div>
             </div>
@@ -333,7 +331,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 echo '</div>';
 
                                 echo '<div class="card-body d-flex flex-column">';
-                                echo '<h5 class="card-title text-center">' . $row['title'] . '</h5>';
+                                echo '<h5 class="card-title text-center" style="height: 50px; item">' . $row['title'] . '</h5>';
                                 echo '<p class="card-text text-center">Author: ' . $row['author'] . '</p>';
                                 echo '<p class="card-text text-center">ISBN: ' . $row['isbn'] . '</p>';
                                 echo '<p class="card-text text-center">Publication Year: ' . $row['pub_year'] . '</p>';
@@ -370,11 +368,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
-
-
     <button id="backToTopBtn" title="Go to top" style="height: 50px; width:50px;"><i class="fa fa-arrow-up"></i></button>
-
-
 
     <script>
         $(document).ready(function() {
