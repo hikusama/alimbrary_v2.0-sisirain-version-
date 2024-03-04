@@ -6,30 +6,29 @@
   }
   
   .letter-a {
-    color: #FF5733; /* Color for letter A */
-  }
-  
-  .letter-l {
-    color: #daaa0f; /* Color for letter L */
-  }
-  
-  .letter-i {
-    color: #546b2a; /* Color for letter I */
-  }
-  
-  .letter-m {
-    color: #C70039; /* Color for letter M */
-  }
-  
-  .letter-b {
-    color: #581845; /* Color for letter B */
-  }
-  
-  .letter-r {
-    color: #900C3F; /* Color for letter R */
-  }
-  
-  .letter-y {
-    color: #0000FF; /* Color for letter Y */
-  }
-  
+    color: #FFCDB2; /* Lighter color for letter A */
+}
+
+.letter-l {
+    color: #FFE5B4; /* Lighter color for letter L */
+}
+
+.letter-i {
+    color: #E1E6D1; /* Lighter color for letter I */
+}
+
+.letter-m {
+    color: #FFAFCC; /* Lighter color for letter M */
+}
+
+.letter-b {
+    color: #DAADF0; /* Lighter color for letter B */
+}
+
+.letter-r {
+    color: #FFB5E8; /* Lighter color for letter R */
+}
+
+.letter-y {
+    color: #B5EAEA; /* Lighter color for letter Y */
+}

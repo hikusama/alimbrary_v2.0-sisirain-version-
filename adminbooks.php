@@ -174,33 +174,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         label {
             font-weight: bold;
         }
-
-        .form-control {
-            border-radius: 5px;
-        }
-
-        /* Add custom styles for the modal */
-        .modal-content {
-            border-radius: 10px;
-        }
-
-        .modal-header {
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-        }
-
-        .modal-body {
-            padding: 20px;
-        }
-
-        .modal-title {
-            font-size: 20px;
-        }
-
-        .invalid-feedback {
-            color: red;
-        }
     </style>
+
     <script>
         $(document).ready(function() {
             $('[data-toggle="tooltip"]').tooltip();
@@ -221,7 +196,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </button>
                         </a>
 
-
                         <button type="button" class="btn btn-success btn-md pull-right mr-2" data-toggle="modal" data-target="#exampleModal" data-toggle="tooltip" data-placement="top" title="Add New Book">
                             <i class="fa fa-plus-circle"></i>
                         </button>
@@ -233,15 +207,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <button class="btn btn-outline-info btn-md pull-right mr-2" type="button" id="searchButton" data-toggle="tooltip" data-placement="top" title="Search">
                             <i class="fa fa-search"></i>
                         </button>
-
                         <input type="text" id="searchInput" class="form-control form-control-md pull-right mr-2" placeholder="Search books" style="width:200px;">
-
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 
     <div class="modal fade" id="exampleModal">
         <div class="modal-dialog">
@@ -309,66 +281,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="container-fluid">
         <div class="row">
-            <div class="container">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-                    <?php
-                    // Include config file
-                    require_once "config.php";
+            <?php
+            // Include config file
+            require_once "config.php";
 
-                    // Attempt select query execution
-                    $sql = "SELECT * FROM books";
-                    if ($result = mysqli_query($conn, $sql)) {
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_array($result)) {
-                                echo '<div class="col mb-4">';
-                                echo '<div class="card h-100 border-primary">';
-                                echo '<div class="d-flex justify-content-center align-items-center mt-2" style="height: 240px;">';
+            // Attempt select query execution
+            $sql = "SELECT * FROM books";
+            if ($result = mysqli_query($conn, $sql)) {
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_array($result)) {
+                        echo '<div class="col-lg-3 col-md-4 col-sm-6 mb-4">';
+                        echo '<div class="card h-100 border-primary rounded shadow">';
+                        echo '<div class="d-flex justify-content-center align-items-center mt-2" style="height: 240px;">';
 
-                                // Display the image if image path exists
-                                if (!empty($row['image_path'])) {
-                                    echo '<img src="' . $row['image_path'] . '" alt="Book Image" style="max-height: 200px; max-width: 150px;">';
-                                } else {
-                                    echo '<span>No image available</span>';
-                                }
-                                echo '</div>';
-
-                                echo '<div class="card-body d-flex flex-column">';
-                                echo '<h5 class="card-title text-center">' . $row['title'] . '</h5>';
-                                echo '<p class="card-text text-center">Author: ' . $row['author'] . '</p>';
-                                echo '<p class="card-text text-center">ISBN: ' . $row['isbn'] . '</p>';
-                                echo '<p class="card-text text-center">Publication Year: ' . $row['pub_year'] . '</p>';
-                                echo '<p class="card-text text-center">Genre: ' . $row['genre'] . '</p>';
-                                // Check availability and apply appropriate styling
-                                $availability = $row['availability'];
-                                $badgeClass = ($availability == 'Available') ? 'badge-warning' : 'badge-danger';
-                                echo '<p class="card-text text-center">Availability: <span class="badge ' . $badgeClass . ' text-light">' . $availability . '</span></p>';
-
-                                // Move the links to the bottom of the card
-                                echo '<div class="mt-auto d-flex flex-row justify-content-center align-items-center bg-secondary rounded p-2 mx-auto" style="max-width: 120px;">';
-                                echo '<a href="adminviewbook.php?book_id=' . $row['book_id'] . '" class="mr-3 text-light" title="View Record" data-toggle="tooltip"><span class="fa fa-eye fa-lg"></span></a>';
-                                echo '<a href="updatebook.php?book_id=' . $row['book_id'] . '" class="mr-3 text-light" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil fa-lg"></span></a>';
-                                echo '<a href="deletebook.php?book_id=' . $row['book_id'] . '" class="text-light" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash fa-lg"></span></a>';
-                                echo '</div>';
-                                echo '</div>';
-                                echo '</div>';
-                                echo '</div>';
-                            }
-                            // Free result set
-                            mysqli_free_result($result);
+                        // Display the image if image path exists
+                        if (!empty($row['image_path'])) {
+                            echo '<img src="' . $row['image_path'] . '" alt="Book Image" style="max-height: 200px; max-width: 150px;">';
                         } else {
-                            echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
+                            echo '<span>No image available</span>';
                         }
-                    } else {
-                        echo "Oops! Something went wrong. Please try again later.";
-                    }
+                        echo '</div>';
 
-                    // Close connection
-                    mysqli_close($conn);
-                    ?>
-                </div>
-            </div>
+                        echo '<div class="card-body">';
+                        echo '<h5 class="card-title text-center">' . $row['title'] . '</h5>';
+                        echo '<p class="card-text text-center">Author: ' . $row['author'] . '</p>';
+                        echo '<p class="card-text text-center">ISBN: ' . $row['isbn'] . '</p>';
+                        echo '<p class="card-text text-center">Publication Year: ' . $row['pub_year'] . '</p>';
+                        echo '<p class="card-text text-center">Genre: ' . $row['genre'] . '</p>';
+                        // Check availability and apply appropriate styling
+                        $availability = $row['availability'];
+                        $badgeClass = ($availability == 'Available') ? 'badge-warning' : 'badge-danger';
+                        echo '<p class="card-text text-center">Availability: <span class="badge ' . $badgeClass . ' text-light">' . $availability . '</span></p>';
+                        echo '</div>';
+
+                        // Move the links to the bottom of the card
+                        echo '<div class="card-footer rounded-bottom d-flex justify-content-around">';
+                        echo '<a href="adminviewbook.php?book_id=' . $row['book_id'] . '" class="btn btn-info rounded-circle" title="View Record" data-toggle="tooltip"><span class="fa fa-eye fa-lg"></span></a>';
+                        echo '<a href="updatebook.php?book_id=' . $row['book_id'] . '" class="btn btn-warning rounded-circle" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil fa-lg"></span></a>';
+                        echo '<a href="deletebook.php?book_id=' . $row['book_id'] . '" class="btn btn-danger rounded-circle" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash fa-lg"></span></a>';
+                        echo '</div>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                    // Free result set
+                    mysqli_free_result($result);
+                } else {
+                    echo '<div class="col">';
+                    echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<div class="col">';
+                echo '<div class="alert alert-danger"><em>Oops! Something went wrong. Please try again later.</em></div>';
+                echo '</div>';
+            }
+
+            // Close connection
+            mysqli_close($conn);
+            ?>
         </div>
     </div>
+
+
 
 
 
@@ -377,31 +351,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     <script>
-        $(document).ready(function() {
-            $("#searchButton").click(function() {
-                var searchText = $("#searchInput").val().trim().toLowerCase(); // Remove leading and trailing spaces
-                $(".card").each(function() {
-                    var title = $(this).find(".card-title").text().toLowerCase();
-                    var author = $(this).find(".card-text").eq(0).text().toLowerCase();
-                    var isbn = $(this).find(".card-text").eq(1).text().toLowerCase();
-                    var pubYear = $(this).find(".card-text").eq(2).text().toLowerCase();
-                    var genre = $(this).find(".card-text").eq(3).text().toLowerCase();
-                    if (title.indexOf(searchText) === -1 && author.indexOf(searchText) === -1 && isbn.indexOf(searchText) === -1 && pubYear.indexOf(searchText) === -1 && genre.indexOf(searchText) === -1) {
-                        $(this).parent('.col').hide(); // Hide the entire card container
-                    } else {
-                        $(this).parent('.col').show(); // Show the entire card container
-                    }
-                });
-            });
+    $(document).ready(function() {
+        $("#searchButton").click(function() {
+            var searchText = $("#searchInput").val().trim().toLowerCase(); // Remove leading and trailing spaces
+            $(".card").each(function() {
+                var title = $(this).find(".card-title").text().toLowerCase();
+                var author = $(this).find(".card-text").eq(0).text().toLowerCase();
+                var isbn = $(this).find(".card-text").eq(1).text().toLowerCase();
+                var pubYear = $(this).find(".card-text").eq(2).text().toLowerCase();
+                var genre = $(this).find(".card-text").eq(3).text().toLowerCase();
+                var availability = $(this).find(".badge").text().toLowerCase(); // Get availability text
 
-            // Refresh button click event
-            $("#refreshButton").click(function() {
-                location.reload(); // Reload the page
+                if (title.indexOf(searchText) === -1 && author.indexOf(searchText) === -1 && isbn.indexOf(searchText) === -1 && pubYear.indexOf(searchText) === -1 && genre.indexOf(searchText) === -1 && availability.indexOf(searchText) === -1) {
+                    $(this).parent('.col-lg-3').hide(); // Hide the entire column
+                } else {
+                    $(this).parent('.col-lg-3').show(); // Show the entire column
+                }
             });
         });
-    </script>
 
-    <script>
+        // Refresh button click event
+        $("#refreshButton").click(function() {
+            location.reload(); // Reload the page
+        });
+    });
+</script>
+
+<script>
         $(document).ready(function() {
             // Show or hide the button based on scroll position
             $(window).scroll(function() {
@@ -421,6 +397,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             });
         });
     </script>
+
+
 </body>
 
 </html>

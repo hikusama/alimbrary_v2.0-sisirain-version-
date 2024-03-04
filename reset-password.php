@@ -79,11 +79,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <style>
         body {
             font: 14px sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         .wrapper {
             width: 360px;
             padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .wrapper h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+
+        .btn-link {
+            width: 100%;
+            text-align: center;
+            display: inline-block;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -109,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Initialize the cancel link variable
             $cancel_link = isset($_SESSION["role"]) && $_SESSION["role"] == "admin" ? "welcomeadmin.php" : "userwelcome.php";
             ?>
-            <a class="btn btn-link ml-2" href="<?php echo $cancel_link; ?>">Cancel</a>
+            <a class="btn btn-link" href="<?php echo $cancel_link; ?>">Cancel</a>
             </div>
         </form>
             

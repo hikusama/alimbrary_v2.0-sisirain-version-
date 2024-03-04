@@ -23,7 +23,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     .navbar-nav .nav-link:hover {
       color: #ffffff;
       /* Change text color on hover */
-      background-color: #6c757d;
+      background-color: rgba(0, 0, 0, 0.7);
       /* Change background color on hover */
       border-radius: 5px;
     }
@@ -66,7 +66,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg" style="position: absolute; top: 0; left: 0; right: 0; z-index: 1; background-color: rgba(0, 0, 0, 0.39);">
     <div class="container-fluid">
-      <div class="title rounded-3 p-1" style="background-color: rgba(255, 255, 255, 0.9);">
+      <div class="title rounded-3 p-1">
         <span class="letter-a">A</span>
         <span class="letter-l">l</span>
         <span class="letter-i">i</span>
@@ -80,8 +80,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </div>
 
       <!-- Toggle Button -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="fa fa-bars fa-lg"></span>
       </button>
 
       <!-- Navbar Links -->
@@ -89,7 +89,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active text-light" aria-current="page" href="#"><i class="fa fa-home fa-lg"></i>Home
- </a>
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-light" href="#"><i class="fa fa-info-circle fa-lg"></i>About</a>
@@ -97,15 +97,25 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
           <li class="nav-item">
             <a class="nav-link text-light" href="adminbooks.php"><i class="fa fa-book fa-lg"></i>Books</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="borrowers.php"><i class="fa fa-users fa-lg"></i>Borrowers</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="users.php"><i class="fa fa-user-circle fa-lg"></i>Users</a>
+          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-user fa-lg"></i> <?php echo htmlspecialchars($_SESSION["username"]); ?> </a>
-            <ul class="dropdown-menu">
+              <i class="fa fa-user fa-lg"></i> <?php echo htmlspecialchars($_SESSION["username"]); ?>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-sm"> <!-- Added dropdown-menu-sm class for smaller dropdown -->
               <li><a class="dropdown-item" href="logout.php">Sign out</a></li>
-              <li><hr></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li> <!-- Use dropdown-divider class for horizontal line -->
               <li><a class="dropdown-item" href="reset-password.php">Reset Password</a></li>
             </ul>
           </li>
+
         </ul>
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search Books" aria-label="Search">
@@ -119,4 +129,4 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 </body>
 
 
-</html> 
+</html>
