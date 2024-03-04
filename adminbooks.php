@@ -303,7 +303,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo '</div>';
 
                         echo '<div class="card-body">';
-                        echo '<h5 class="card-title text-center">' . $row['title'] . '</h5>';
+                        echo '<h5 class="card-title text-center" style="height: 50px; item">' . $row['title'] . '</h5>';
                         echo '<p class="card-text text-center">Author: ' . $row['author'] . '</p>';
                         echo '<p class="card-text text-center">ISBN: ' . $row['isbn'] . '</p>';
                         echo '<p class="card-text text-center">Publication Year: ' . $row['pub_year'] . '</p>';
@@ -336,19 +336,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo '</div>';
             }
 
-            // Close connection
-            mysqli_close($conn);
-            ?>
+                    // Close connection
+                    mysqli_close($conn);
+                    ?>
+                </div>
+            </div>
         </div>
     </div>
 
 
 
-
-
     <button id="backToTopBtn" title="Go to top" style="height: 50px; width:50px;"><i class="fa fa-arrow-up"></i></button>
-
-
 
     <script>
     $(document).ready(function() {
