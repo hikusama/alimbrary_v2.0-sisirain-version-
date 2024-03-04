@@ -1,4 +1,15 @@
 <?php
+// Initialize the session
+session_start();
+
+// Check if the user is logged in, if not then redirect him to login page
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("location: login.php");
+    exit;
+}
+?>
+
+<?php
 // Process delete operation after confirmation
 if(isset($_POST["book_id"]) && !empty($_POST["book_id"])){
     // Include config file
@@ -17,7 +28,7 @@ if(isset($_POST["book_id"]) && !empty($_POST["book_id"])){
         // Attempt to execute the prepared statement
         if(mysqli_stmt_execute($stmt)){
             // Records deleted successfully. Redirect to landing page
-            header("location: books.php");
+            header("location: adminbooks.php");
             exit();
         } else{
             echo "Oops! Something went wrong. Please try again later.";

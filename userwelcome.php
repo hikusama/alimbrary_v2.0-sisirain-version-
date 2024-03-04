@@ -40,8 +40,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         <span class="letter-a">a</span>
         <span class="letter-r">r</span>
         <span class="letter-y">y</span>
+        <img src="Images/icons8-book-50.png" alt="" style="margin-left: 5px;">
       </div>
-      <img src="Images/icons8-book-50.png" alt="" style="margin-left: 5px;">
+      
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

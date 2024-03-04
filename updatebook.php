@@ -1,4 +1,15 @@
 <?php
+// Initialize the session
+session_start();
+
+// Check if the user is logged in, if not then redirect him to login page
+if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
+    header("location: login.php");
+    exit;
+}
+?>
+
+<?php
 // Include config file
 require_once "config.php";
 
@@ -181,9 +192,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-top: 50px;
         }
         h2 {
-            color: #007bff;
+            color: black;
             text-align: center;
             margin-bottom: 30px;
+            font-weight: bold;
         }
         form {
             background-color: #fff;
@@ -197,19 +209,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .form-control {
             border-radius: 5px;
         }
-        .btn-primary, .btn-secondary {
+        .btn-success, .btn-secondary {
             border-radius: 5px;
         }
-        .btn-primary {
-            background-color: #007bff;
+        .btn-success {           
             border: none;
         }
-        .btn-secondary {
-            background-color: #6c757d;
+        .btn-secondary {           
             border: none;
-        }
-        .btn-primary:hover, .btn-secondary:hover {
-            background-color: #0056b3;
         }
         .text-danger {
             color: #dc3545;
@@ -217,7 +224,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container mb-3">
         <h2>Update Book</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
             <input type="hidden" name="book_id" value="<?php echo $book_id; ?>">
@@ -264,7 +271,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span class="text-danger"><?php echo $image_err; ?></span>
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Update">
+                <input type="submit" class="btn btn-success" value="Update">
                 <a href="adminbooks.php" class="btn btn-secondary ml-2">Cancel</a>
             </div>
         </form>

@@ -170,6 +170,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         #backToTopBtn:hover {
             background-color: rgba(0, 0, 0, 0.7);
         }
+
+        label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            border-radius: 5px;
+        }
+
+        /* Add custom styles for the modal */
+        .modal-content {
+            border-radius: 10px;
+        }
+
+        .modal-header {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+        }
+
+        .invalid-feedback {
+            color: red;
+        }
     </style>
     <script>
         $(document).ready(function() {
@@ -214,63 +244,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="modal fade" id="exampleModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"><i class="fa fa-book"></i> Add Book</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label>Title</label>
-                        <input type="text" name="title" class="form-control <?php echo (!empty($title_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $title; ?>">
-                        <span class="invalid-feedback"><?php echo $title_err; ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label>Author</label>
-                        <input type="text" name="author" class="form-control <?php echo (!empty($author_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $author; ?>">
-                        <span class="invalid-feedback"><?php echo $author_err; ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label>ISBN</label>
-                        <input type="text" name="isbn" class="form-control <?php echo (!empty($isbn_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $isbn; ?>">
-                        <span class="invalid-feedback"><?php echo $isbn_err; ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label>Publication Year</label>
-                        <input type="text" name="pub_year" class="form-control <?php echo (!empty($pub_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $pub_year; ?>">
-                        <span class="invalid-feedback"><?php echo $pub_year_err; ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label>Genre</label>
-                        <input type="text" name="genre" class="form-control <?php echo (!empty($genre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $genre; ?>">
-                        <span class="invalid-feedback"><?php echo $genre_err; ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label>Availability</label>
-                        <select name="availability" class="form-control <?php echo (!empty($availability_err)) ? 'is-invalid' : ''; ?>">
-                            <option value="Available">Available</option>
-                            <option value="Not Available">Not Available</option>
-                        </select>
-                        <span class="invalid-feedback"><?php echo $availability_err; ?></span>
-                    </div>
-                    <div class="form-group">
-                        <label>Image</label>
-                        <input type="file" name="image" class="form-control-file <?php echo (!empty($image_err)) ? 'is-invalid' : ''; ?>">
-                        <span class="invalid-feedback"><?php echo $image_err; ?></span>
-                    </div>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <button type="button" class="btn btn-secondary ml-2" data-dismiss="modal">Close</button>
+                        <h5 class="modal-title"><i class="fa fa-book"></i> Add Book</h5>
                     </div>
-                </form>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" name="title" class="form-control <?php echo (!empty($title_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $title; ?>">
+                            <span class="invalid-feedback"><?php echo $title_err; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Author</label>
+                            <input type="text" name="author" class="form-control <?php echo (!empty($author_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $author; ?>">
+                            <span class="invalid-feedback"><?php echo $author_err; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label>ISBN</label>
+                            <input type="text" name="isbn" class="form-control <?php echo (!empty($isbn_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $isbn; ?>">
+                            <span class="invalid-feedback"><?php echo $isbn_err; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Publication Year</label>
+                            <input type="text" name="pub_year" class="form-control <?php echo (!empty($pub_year_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $pub_year; ?>">
+                            <span class="invalid-feedback"><?php echo $pub_year_err; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Genre</label>
+                            <input type="text" name="genre" class="form-control <?php echo (!empty($genre_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $genre; ?>">
+                            <span class="invalid-feedback"><?php echo $genre_err; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Availability</label>
+                            <select name="availability" class="form-control <?php echo (!empty($availability_err)) ? 'is-invalid' : ''; ?>">
+                                <option value="Available">Available</option>
+                                <option value="Not Available">Not Available</option>
+                            </select>
+                            <span class="invalid-feedback"><?php echo $availability_err; ?></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Image</label>
+                            <input type="file" name="image" class="form-control-file <?php echo (!empty($image_err)) ? 'is-invalid' : ''; ?>">
+                            <span class="invalid-feedback"><?php echo $image_err; ?></span>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="button" class="btn btn-secondary ml-2" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
 
