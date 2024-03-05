@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,26 +13,32 @@
         body {
             background-color: #f8f9fa;
         }
+
         .card {
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
         }
+
         .card-header {
             background-color: #007bff;
             color: #fff;
             border-radius: 15px 15px 0 0;
         }
+
         .card-body {
             padding: 20px;
         }
+
         .table {
             background-color: #fff;
         }
+
         .table th,
         .table td {
             vertical-align: middle;
         }
+
         .btn-back {
             background-color: #007bff;
             color: #fff;
@@ -39,14 +46,20 @@
             padding: 10px 20px;
             text-decoration: none;
         }
+
         .btn-back:hover {
             background-color: #0056b3;
             color: #fff;
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
+    <div class="d-flex flex-row justify-content-end mr-2" style="margin-top:10px;">
+    <a href="welcomeadmin.php" class="btn btn-back"><i class="fa fa-home"></i> Back to Home</a>
+    </div>
+   
+    <div class="container mb-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -60,12 +73,14 @@
                             require_once "config.php";
 
                             // Function to show borrow history
-                            function showBorrowHistory($conn) {
-                                // Query to retrieve borrow history information with book title
+                            function showBorrowHistory($conn)
+                            {
+                                // Query to retrieve all borrow history information with book title
                                 $sql = "SELECT borrowed_books.borrow_id, borrowed_books.borrow_date, borrowed_books.return_date, users.id, users.username, books.title 
                                         FROM borrowed_books 
                                         INNER JOIN users ON borrowed_books.user_id = users.id
-                                        INNER JOIN books ON borrowed_books.book_id = books.book_id";
+                                        INNER JOIN books ON borrowed_books.book_id = books.book_id
+                                        LEFT JOIN return_history ON borrowed_books.borrow_id = return_history.borrow_id";
 
                                 // Execute the query
                                 $result = mysqli_query($conn, $sql);
@@ -85,16 +100,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>';
-                                    
+
                                     // Fetch rows and display data
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         echo '<tr>
-                                                <td class="text-center">'.$row['borrow_id'].'</td>
-                                                <td class="text-center">'.$row['id'].'</td>
-                                                <td>'.$row['username'].'</td>
-                                                <td>'.$row['title'].'</td>
-                                                <td class="text-center">'.$row['borrow_date'].'</td>
-                                                <td class="text-center">'.$row['return_date'].'</td>
+                                                <td class="text-center">' . $row['borrow_id'] . '</td>
+                                                <td class="text-center">' . $row['id'] . '</td>
+                                                <td>' . $row['username'] . '</td>
+                                                <td>' . $row['title'] . '</td>
+                                                <td class="text-center">' . $row['borrow_date'] . '</td>
+                                                <td class="text-center">' . ($row['return_date'] ? $row['return_date'] : 'Not returned') . '</td>
                                             </tr>';
                                     }
                                     echo '</tbody></table>';
@@ -117,11 +132,8 @@
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-8">
-                <a href="welcomeadmin.php" class="btn btn-back"><i class="fa fa-home"></i> Back to Home</a>
-            </div>
-        </div>
     </div>
 </body>
+
 </html>
+

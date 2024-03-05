@@ -40,17 +40,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
       <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
     </div>
-
+    
     <!-- The slideshow/carousel -->
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="Images\lib1.jpg" alt="Los Angeles" class="d-block" style="width: 100%; height: 100vh;">
+        <img src="Images\custom-upload-1681454804.webp" alt="Los Angeles" class="d-block" style="width: 100%; height: 100vh;">
       </div>
       <div class="carousel-item">
-        <img src="Images\lib2.jpg" alt="Chicago" class="d-block" style="width: 100%; height: 100vh;">
+        <img src="Images\istockphoto-1437365584-1024x1024.jpg" alt="Chicago" class="d-block" style="width: 100%; height: 100vh;">
       </div>
       <div class="carousel-item">
-        <img src="Images\lib3.jpg" alt="New York" class="d-block" style="width: 100%; height: 100vh;">
+        <img src="Images\School-Library-Management-Software-01-1024x555.png" alt="New York" class="d-block" style="width: 100%; height: 100vh;">
       </div>
     </div>
 
@@ -80,23 +80,26 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       </div>
 
       <!-- Toggle Button -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <button class="navbar-toggler text-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="fa fa-bars fa-lg"></span>
       </button>
 
       <!-- Navbar Links -->
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active text-light" aria-current="page" href="#"><i class="fa fa-home fa-lg"></i>Home
- </a>
+            <a class="nav-link active text-light" aria-current="page" href="#"><i class="fa fa-home fa-lg"></i> Home
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" href="#"><i class="fa fa-info-circle fa-lg"></i>About</a>
+            <a class="nav-link text-light" href="#"><i class="fa fa-info-circle fa-lg"></i> About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light" href="userbook.php"><i class="fa fa-book fa-lg"></i>Books</a>
+            <a class="nav-link text-light" href="userbook.php"><i class="fa fa-book fa-lg"></i> Books</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link text-light" href="borrowedbooks.php"><i class="fa fa-list fa-lg"></i> Borrowed Books</a>
+        </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fa fa-user fa-lg"></i> <?php echo htmlspecialchars($_SESSION["username"]); ?>
@@ -109,11 +112,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
               <li><a class="dropdown-item" href="reset-password.php">Reset Password</a></li>
             </ul>
           </li>
+
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search Books" aria-label="Search">
-          <button class="btn btn-outline-warning text-light" type="submit">Search</button>
-        </form>
       </div>
     </div>
   </nav>
@@ -122,4 +122,4 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 </body>
 
 
-</html> 
+</html>

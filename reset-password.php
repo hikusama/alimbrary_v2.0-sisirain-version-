@@ -8,6 +8,9 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 
+// Initialize the cancel link variable
+$cancel_link = isset($_SESSION["user_type"]) && $_SESSION["user_type"] == 'admin' ? "welcomeadmin.php" : "userwelcome.php";
+                
 // Include config file
 require_once "config.php";
 
@@ -67,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Close connection
     mysqli_close($conn);
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -132,15 +136,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
-                <?php
-            // Initialize the cancel link variable
-            $cancel_link = isset($_SESSION["role"]) && $_SESSION["role"] == "admin" ? "welcomeadmin.php" : "userwelcome.php";
-            ?>
-            <a class="btn btn-link" href="<?php echo $cancel_link; ?>">Cancel</a>
+                
+                <a class="btn btn-link" href="<?php echo $cancel_link; ?>">Cancel</a>
             </div>
         </form>
-            
-        
+
+
     </div>
 </body>
 

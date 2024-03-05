@@ -191,7 +191,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="mt-3 clearfix">
                         <h2 class="pull-left">Books</h2>
                         <a href="welcomeadmin.php" class="text-light">
-                            <button class="btn btn-outline-dark btn-md pull-right disabled" data-toggle="tooltip" data-placement="top" title="Back to Dashboard">
+                            <button class="btn btn-outline-dark btn-md pull-right disabled" data-toggle="tooltip" data-placement="top" title="Back to Home">
                                 <i class="fa fa-arrow-left" style="color: black;"></i>
                             </button>
                         </a>
@@ -316,9 +316,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         // Move the links to the bottom of the card
                         echo '<div class="card-footer rounded-bottom d-flex justify-content-around">';
-                        echo '<a href="adminviewbook.php?book_id=' . $row['book_id'] . '" class="btn btn-info rounded-circle" title="View Record" data-toggle="tooltip"><span class="fa fa-eye fa-lg"></span></a>';
-                        echo '<a href="updatebook.php?book_id=' . $row['book_id'] . '" class="btn btn-warning rounded-circle" title="Update Record" data-toggle="tooltip"><span class="fa fa-pencil fa-lg"></span></a>';
-                        echo '<a href="deletebook.php?book_id=' . $row['book_id'] . '" class="btn btn-danger rounded-circle" title="Delete Record" data-toggle="tooltip"><span class="fa fa-trash fa-lg"></span></a>';
+                        echo '<a href="adminviewbook.php?book_id=' . $row['book_id'] . '" class="btn btn-info rounded-circle" title="View Book" data-toggle="tooltip"><span class="fa fa-eye fa-lg"></span></a>';
+                        echo '<a href="updatebook.php?book_id=' . $row['book_id'] . '" class="btn btn-warning rounded-circle" title="Update Book" data-toggle="tooltip"><span class="fa fa-pencil fa-lg"></span></a>';
+                        echo '<a href="deletebook.php?book_id=' . $row['book_id'] . '" class="btn btn-danger rounded-circle" title="Delete Book" data-toggle="tooltip"><span class="fa fa-trash fa-lg"></span></a>';
                         echo '</div>';
                         echo '</div>';
                         echo '</div>';
