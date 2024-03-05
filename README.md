@@ -1,12 +1,12 @@
 # Alimbrary v2
-## Not so stable version
-## commit hanggang mamatay
-## beware of bugs
+### Not so stable version
+### commit hanggang mamatay
+### beware of bugs
 
-## admin:
+### admin:
 username: admin
 password: 123456
 
-## sample user:
+### sample user:
 username: user01
 password: 123456
