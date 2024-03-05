@@ -63,7 +63,6 @@ $result = mysqli_query($conn, $return_history_sql);
         th,
         td {
             padding: 10px;
-            text-align: center;
             border-bottom: 1px solid #dee2e6;
         }
 

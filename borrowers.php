@@ -61,7 +61,7 @@
    
     <div class="container mb-5">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header text-center">
                         <h4 class="mb-0">Borrow History</h4>
@@ -80,7 +80,8 @@
                                         FROM borrowed_books 
                                         INNER JOIN users ON borrowed_books.user_id = users.id
                                         INNER JOIN books ON borrowed_books.book_id = books.book_id
-                                        LEFT JOIN return_history ON borrowed_books.borrow_id = return_history.borrow_id";
+                                        LEFT JOIN return_history ON borrowed_books.borrow_id = return_history.borrow_id
+                                        ORDER BY borrowed_books.borrow_id DESC";
 
                                 // Execute the query
                                 $result = mysqli_query($conn, $sql);
