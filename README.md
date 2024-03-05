@@ -8,4 +8,4 @@ password: 123456
 
 sample user:
 username: user01
-passoword: 123456
+password: 123456
