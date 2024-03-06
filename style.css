@@ -70,6 +70,7 @@
     color: #222;
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
+    padding: 6px 12px 6px 12px;
 }
 
 .space {
@@ -87,7 +88,7 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.pass-key:valid ~ .show {
+.pass-key:valid {
     display: block;
 }
 
@@ -186,3 +187,11 @@ i span {
     color: #0000FF; /* Color for letter Y */
   }
   
+@media only screen and (max-width: 480px) {
+    .content {
+        width: 80%;
+    }
+    .field {
+        margin-bottom: 20px;
+    }
+}

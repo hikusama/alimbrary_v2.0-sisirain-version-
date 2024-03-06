@@ -96,19 +96,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    <head>
         <meta charset="utf-8">
         <title>Login</title>      
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <link rel="stylesheet" href="style.css">
-        <style>
-            /* Add CSS for responsiveness */
-            @media only screen and (max-width: 480px) {
-                .content {
-                    width: 80%;
-                }
-                .field {
-                    margin-bottom: 20px;
-                }
-            }
-        </style>
    </head>
    <body>
       <div class="bg-img">
@@ -117,15 +107,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                <div class="field">
                   <span class="fa fa-user"></span>
-                  <input type="text" name="username" required placeholder="Username">
+                  <input type="text" name="username" required placeholder="Username" style="padding: 6px 12px;">
                </div>
                <div class="field space">
                   <span class="fa fa-lock"></span>
-                  <input type="password" class="pass-key" name="password" required placeholder="Password">
-                  <span class="show">SHOW</span>
+                  <input type="password" class="pass-key" name="password" required placeholder="Password" style="padding: 6px 12px;">
                </div>
                <div class="pass">
-                  <a href="#">Forgot Password?</a>
+                  <a href="forgotpassword.php">Forgot Password?</a>
                </div>
                <div class="field">
                   <input type="submit" value="LOGIN">
@@ -140,21 +129,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
          </div>
       </div>
-      <script>
-         const pass_field = document.querySelector('.pass-key');
-         const showBtn = document.querySelector('.show');
-         showBtn.addEventListener('click', function(){
-          if(pass_field.type === "password"){
-            pass_field.type = "text";
-            showBtn.textContent = "HIDE";
-            showBtn.style.color = "#3498db";
-          }
-          else{
-            pass_field.type = "password";
-            showBtn.textContent = "SHOW";
-            showBtn.style.color = "#222";
-          }
-         });
-      </script>
    </body>
 </html>

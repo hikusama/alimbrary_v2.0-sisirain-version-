@@ -111,11 +111,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
               <i class="fa fa-user fa-lg"></i> <?php echo htmlspecialchars($_SESSION["username"]); ?>
             </a>
             <ul class="dropdown-menu dropdown-menu-sm"> <!-- Added dropdown-menu-sm class for smaller dropdown -->
-              <li><a class="dropdown-item" href="logout.php">Sign out</a></li>
-              <li>
-                <hr class="dropdown-divider">
-              </li> <!-- Use dropdown-divider class for horizontal line -->
+              <li> <!-- Use dropdown-divider class for horizontal line -->
               <li><a class="dropdown-item" href="reset-password.php">Reset Password</a></li>
+                <hr class="dropdown-divider">
+              <li><a class="dropdown-item" href="logout.php">Sign out</a></li>
+              </li>
             </ul>
           </li>
 
