@@ -50,7 +50,6 @@ $result = mysqli_query($conn, $return_history_sql);
         h2 {
             margin-top: 0;
             margin-bottom: 20px;
-            text-align: center;
         }
 
         table {
@@ -80,15 +79,13 @@ $result = mysqli_query($conn, $return_history_sql);
             position: absolute;
             top: 20px;
             right: 20px;
-            border-radius: 15px;
-            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h2><i class="fa fa-book"></i> Return History</h2>
+        <h2>Return History</h2>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -112,7 +109,7 @@ $result = mysqli_query($conn, $return_history_sql);
                 ?>
             </tbody>
         </table>
-        <a href="welcomeadmin.php" class="btn btn-primary btn-home">Back to Home</a>
+        <a href="welcomeadmin.php" class="btn btn-primary btn-home"><i class="fa fa-home"></i> Back to Home</a>
     </div>
 </body>
 
