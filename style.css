@@ -148,7 +148,7 @@ i span {
 .error{
     color: rgb(241, 9, 9);
     font-size: 20px;
-    background-color: white;
+    background-color: transparent;
     margin-top: 5px;
 }
 

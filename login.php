@@ -1,6 +1,4 @@
 <?php
-// Initialize the session
-session_start();
 
 // Include config file
 require_once "config.php";
@@ -62,10 +60,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             // Redirect user based on user type
                             if ($user_type == "admin") {
-                                header("location: welcome.php");
+                                header("location: welcomeadmin.php");
                             } 
                             else {
-                                header("location: nothing.html");
+                                header("location: userwelcome.php");
                             }
                         } 
                         else {
@@ -97,9 +95,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en" dir="ltr">
    <head>
         <meta charset="utf-8">
-        <title>Transparent Login Form HTML CSS</title>      
+        <title>Login</title>      
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
         <link rel="stylesheet" href="style.css">
+        <style>
+            /* Add CSS for responsiveness */
+            @media only screen and (max-width: 480px) {
+                .content {
+                    width: 80%;
+                }
+                .field {
+                    margin-bottom: 20px;
+                }
+            }
+        </style>
    </head>
    <body>
       <div class="bg-img">

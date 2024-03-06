@@ -2,12 +2,15 @@
 // Initialize the session
 session_start();
 
-// Check if the user is logged in, otherwise redirect to login page
+// Check if the user is logged in, if not then redirect him to login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: login.php");
     exit;
 }
 
+// Initialize the cancel link variable
+$cancel_link = isset($_SESSION["user_type"]) && $_SESSION["user_type"] == 'admin' ? "welcomeadmin.php" : "userwelcome.php";
+                
 // Include config file
 require_once "config.php";
 
@@ -22,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty(trim($_POST["new_password"]))) {
         $new_password_err = "Please enter the new password.";
     } elseif (strlen(trim($_POST["new_password"])) < 6) {
-        $new_password_err = "Password must have atleast 6 characters.";
+        $new_password_err = "Password must have at least 6 characters.";
     } else {
         $new_password = trim($_POST["new_password"]);
     }
@@ -42,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Prepare an update statement
         $sql = "UPDATE users SET password = ? WHERE id = ?";
 
-        if ($stmt = mysqli_prepare($link, $sql)) {
+        if ($stmt = mysqli_prepare($conn, $sql)) {
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "si", $param_password, $param_id);
 
@@ -52,8 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt)) {
-                // Password updated successfully. Destroy the session, and redirect to login page
-                session_destroy();
+                // Password updated successfully. Redirect to login page
                 header("location: login.php");
                 exit();
             } else {
@@ -66,8 +68,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Close connection
-    mysqli_close($link);
+    mysqli_close($conn);
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -80,11 +83,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <style>
         body {
             font: 14px sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         .wrapper {
             width: 360px;
             padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .wrapper h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+
+        .btn-link {
+            width: 100%;
+            text-align: center;
+            display: inline-block;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -106,9 +136,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
-                <a class="btn btn-link ml-2" href="welcome.php">Cancel</a>
+                
+                <a class="btn btn-link" href="<?php echo $cancel_link; ?>">Cancel</a>
             </div>
         </form>
+
+
     </div>
 </body>
 

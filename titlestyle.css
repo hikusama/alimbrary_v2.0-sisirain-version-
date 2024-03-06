@@ -1,0 +1,34 @@
+.title {
+    font-family: "Arial Black", Arial, sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: -5px;
+  }
+  
+  .letter-a {
+    color: #FFCDB2; /* Lighter color for letter A */
+}
+
+.letter-l {
+    color: #FFE5B4; /* Lighter color for letter L */
+}
+
+.letter-i {
+    color: #E1E6D1; /* Lighter color for letter I */
+}
+
+.letter-m {
+    color: #FFAFCC; /* Lighter color for letter M */
+}
+
+.letter-b {
+    color: #DAADF0; /* Lighter color for letter B */
+}
+
+.letter-r {
+    color: #FFB5E8; /* Lighter color for letter R */
+}
+
+.letter-y {
+    color: #B5EAEA; /* Lighter color for letter Y */
+}
