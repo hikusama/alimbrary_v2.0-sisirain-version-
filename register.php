@@ -114,24 +114,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                <div class="field">
                   <span class="fa fa-user"></span>
-                  <input type="text" name="username" required placeholder="Username">
+                  <input type="text" name="username" required placeholder="Username" style="padding: 6px 12px;">
                </div>
                <div class="field space">
                   <span class="fa fa-lock"></span>
-                  <input type="password" class="pass-key" name="password" required placeholder="Password">
-                  <span class="show">SHOW</span>
+                  <input type="password" class="pass-key" name="password" required placeholder="Password" style="padding: 6px 12px;">
                </div>
                <div class="field space">
                   <span class="fa fa-lock"></span>
-                  <input type="password" class="pass-key" name="confirm_password" required placeholder="Confirm Password">
-                  <span class="show">SHOW</span>
+                  <input type="password" class="pass-key" name="confirm_password" required placeholder="Confirm Password" style="padding: 6px 12px;">
                </div>
                <div class="pass">
                   <a href="#"> </a>
                </div>
                <div class="field">
                   <input type="submit" class="btn btn-primary" value="Submit">
-                  <input type="reset" class="btn btn-secondary ml-2" value="Reset">
                </div>
             </form>
             <?php if (!empty($login_err)) : ?>
@@ -143,23 +140,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
          </div>
       </div>
-      <script>
-        const pass_fields = document.querySelectorAll('.pass-key');
-        const showBtns = document.querySelectorAll('.show');
-
-        showBtns.forEach((btn, index) => {
-            btn.addEventListener('click', function(){
-                if(pass_fields[index].type === "password"){
-                    pass_fields[index].type = "text";
-                    btn.textContent = "HIDE";
-                    btn.style.color = "#3498db";
-                } else {
-                    pass_fields[index].type = "password";
-                    btn.textContent = "SHOW";
-                    btn.style.color = "#222";
-                }
-            });
-        });
-    </script>
    </body>
 </html>

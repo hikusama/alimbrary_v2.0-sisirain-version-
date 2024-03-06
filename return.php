@@ -10,6 +10,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +25,9 @@
     <div class="container mt-5">
         <h2>Return Confirmation</h2>
         <p>Are you sure you want to return this book?</p>
+
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+
             <input type="hidden" name="borrow_id" value="<?php echo isset($_GET['borrow_id']) ? $_GET['borrow_id'] : ''; ?>">
             <button type="submit" class="btn btn-success">Confirm</button>
             <a href="borrowedbooks.php" class="btn btn-secondary">Cancel</a>
@@ -35,11 +38,14 @@
     // Start session
 
 
+
+
     // Include config file
     require_once "config.php";
 
     // Check if borrow_id is set in the URL
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
         // Prepare a SQL statement to insert return information into return_history table
         $insert_return_sql = "INSERT INTO return_history (user_id, book_id, borrow_id, returned_date_time, status) VALUES (?, (SELECT book_id FROM borrowed_books WHERE borrow_id = ?), ?, CURRENT_TIMESTAMP, 'returned')";
 
@@ -50,6 +56,7 @@
             // Set parameters
             $param_user_id = $_SESSION["id"];
             $param_borrow_id = trim($_SESSION['idbuk']);
+
 
             // Attempt to execute the prepared statement
             if (mysqli_stmt_execute($stmt)) {
@@ -66,8 +73,10 @@
                     // Attempt to execute the prepared statement
                     if (mysqli_stmt_execute($stmt2)) {
                         // Redirect to the borrowed books page
+
                       
                         header("location: borrowedbooks.php?prompt=success");
+
                         exit();
                     } else {
                         echo "Oops! Something went wrong. Please try again later.";

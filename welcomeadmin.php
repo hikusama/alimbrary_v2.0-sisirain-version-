@@ -116,6 +116,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                 <hr class="dropdown-divider">
               </li> <!-- Use dropdown-divider class for horizontal line -->
               <li><a class="dropdown-item" href="reset-password.php">Reset Password</a></li>
+
             </ul>
           </li>
 

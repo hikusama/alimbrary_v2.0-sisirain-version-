@@ -31,15 +31,17 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
-        .card-user .card-header {
+       .card-user .card-header {
             background-color: #007bff;
             color: #fff;
             border-bottom: none;
             border-radius: 15px 15px 0 0;
         }
+
         .card-user .card-body {
             padding: 20px;
         }
+
         .card-user .card-body h5 {
             font-size: 20px;
             margin-bottom: 10px;
@@ -69,6 +71,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
             padding: 10px 20px;
             text-decoration: none;
         }
+
         .btn-back:hover {
             background-color: #0056b3;
             color: #fff;
@@ -124,6 +127,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
                         // Close the connection
                         mysqli_close($conn);
                         ?>
+
                     </div>
                 </div>
             </div>
@@ -138,3 +142,4 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
 
 </body>
 </html>
+

@@ -5,6 +5,7 @@
     <title>Borrowed Books</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
     <div class="container mt-5">
@@ -54,8 +55,10 @@
                 <div class="row">
                     <div class="col">
                         <div class="table-responsive">
+
                             <table class="table table-striped table-hover border-dark">
                                 <thead>
+
                                     <tr>
                                         <th>Borrow ID</th>
                                         <th>Book Title</th>
@@ -77,6 +80,7 @@
                                         echo "<td>" . $return_date . "</td>";
                                         echo "<td>";
                                         // Add the Return Book button with a link to return.php
+
                                         echo "<a href='return.php' class='btn btn-danger btn-sm text-light fw-bold'>Return Book</a>";
                                         echo "</td>";
                                         echo "</tr>";
@@ -84,6 +88,7 @@
                                     }
                                     if(isset($_GET['prompt']) && $_GET['prompt'] === "success"){
                                         echo "<p style='color:red;' >Book Succesfully Delete...</p>";
+
                                     }
                                     ?>
                                 </tbody>
@@ -110,7 +115,5 @@
         mysqli_close($conn);
         ?>
     </div>
-
- 
 </body>
 </html>

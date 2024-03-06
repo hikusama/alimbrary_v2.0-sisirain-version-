@@ -23,6 +23,7 @@
         .card-header {
             background-color: #007bff;
             color: #fff;
+
             border-radius: 15px 15px 0 0;
         }
 
@@ -39,6 +40,7 @@
             vertical-align: middle;
         }
 
+
         .btn-back {
             background-color: #007bff;
             color: #fff;
@@ -51,6 +53,7 @@
             background-color: #0056b3;
             color: #fff;
         }
+
     </style>
 </head>
 
@@ -59,12 +62,15 @@
     <a href="welcomeadmin.php" class="btn btn-back"><i class="fa fa-home"></i> Back to Home</a>
     </div>
    
+
     <div class="container mb-5">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
+
                     <div class="card-header text-center">
                         <h4 class="mb-0">Borrow History</h4>
+
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -90,7 +96,9 @@
                                 if ($result && mysqli_num_rows($result) > 0) {
                                     // Display borrow history information in a table
                                     echo '<table class="table table-bordered table-striped">
+
                                             <thead class="thead-dark">
+
                                                 <tr>
                                                     <th class="text-center">Borrow ID</th>
                                                     <th class="text-center">User ID</th>
@@ -135,6 +143,5 @@
         </div>
     </div>
 </body>
-
 </html>
 

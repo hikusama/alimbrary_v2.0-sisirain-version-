@@ -308,6 +308,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         echo '<p class="card-text text-center">ISBN: ' . $row['isbn'] . '</p>';
                         echo '<p class="card-text text-center">Publication Year: ' . $row['pub_year'] . '</p>';
                         echo '<p class="card-text text-center">Genre: ' . $row['genre'] . '</p>';
+
                         // Check availability and apply appropriate styling
                         $availability = $row['availability'];
                         $badgeClass = ($availability == 'Available') ? 'badge-warning' : 'badge-danger';
